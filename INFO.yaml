@@ -1,0 +1,44 @@
+---
+project: 'scp/oam/modeling'
+project_creation_date: '2019-08-08'
+project_category: ''
+lifecycle_state: 'Incubation'
+project_lead: &oran_oam_ptl
+    name: 'Martin Skorupski'
+    email: 'martin.skorupski@highstreet-technologies.com'
+    id: 'demx8as6'
+    company: 'highstreet technologies GmbH'
+    timezone: 'Germany/Berlin'
+primary_contact: *oran_oam_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.o-ran-sc.org/projects/OAM'
+    key: 'OAM'
+mailing_list:
+    type: 'groups.io'
+    url: 'https://lists.o-ran-sc.org/g/main'
+    tag: '<[oam]>'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#o-ran-sc'
+meetings:
+    - type: 'zoom'
+      agenda: ''
+      url: ''
+      server: 'n/a'
+      channel: 'n/a'
+      repeats: 'weekly'
+      time: 'Mondays, 13:00 UTC'
+repositories:
+    - 'scp/oam/modeling'
+committers:
+    - <<: *oran_oam_ptl
+    - name: 'Kevin Scaggs'
+      email: 'ks0567@att.com'
+      company: 'AT&T Inc.'
+      id: 'ks0567'
+      timezone: 'USA/Missouri/St. Louis'
+tsc:
+    # yamllint disable-line rule:line-length
+    approval: 'https://wiki.o-ran-sc.org/display/TOC#O-RANSCTechnicalOversightCommittee(TOC)-20190925'
