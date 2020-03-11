@@ -39,6 +39,11 @@ committers:
       company: 'AT&T Inc.'
       id: 'ks0567'
       timezone: 'USA/Missouri/St. Louis'
+    - name: 'Alex Stancu'
+      email: 'alexandru.stancu@highstreet-technologies.com'
+      id: 'alex.stancu'
+      company: 'highstreet technologies GmbH'
+      timezone: 'Europe/Bucharest'
 tsc:
     # yamllint disable-line rule:line-length
     approval: 'https://wiki.o-ran-sc.org/display/TOC#O-RANSCTechnicalOversightCommittee(TOC)-20190925'
