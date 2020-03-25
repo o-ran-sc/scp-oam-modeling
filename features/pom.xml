@@ -28,6 +28,7 @@
 
   <modules>
     <module>o-ran/ru-fh</module>
+    <module>x-ran/ru-fh</module>
   </modules>
 
   <repositories>
