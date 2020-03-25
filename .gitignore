@@ -17,3 +17,18 @@
 
 data-model/tools/extractYangFrom3gpp/3gpp-ts-28.541/src/resources/*
 target
+target-ide/
+yang-gen-sal/
+.checkstyle
+.classpath
+.project
+.settings
+.factorypath
+.metadata
+*.swp
+dist/
+*/**/bin/
+etc/
+node_modules/
+.fbExcludeFilterFile
+*.md.html
