@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15bdf921_589f6ef4",
+        "filename": "features/o-ran/ru-fh/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-30T23:18:33Z",
+      "side": 1,
+      "message": "scp-oam-modeling",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "98a54155a400dc224e1adb598304ad11c700dce1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc412ba_6487d634",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-30T23:18:33Z",
+      "side": 1,
+      "message": "Aric says, the groupId should be org.o-ran-sc.scp-oam-modeling (hyphen not dots)",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "98a54155a400dc224e1adb598304ad11c700dce1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51b37a3_65ae7c4a",
+        "filename": "features/x-ran/ru-fh/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2020-03-30T23:18:33Z",
+      "side": 1,
+      "message": "scp-oam-modeling",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "98a54155a400dc224e1adb598304ad11c700dce1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
