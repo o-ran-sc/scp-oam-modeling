@@ -33,7 +33,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>org.o-ran-sc.scp.oam.modeling.features</groupId>
+    <groupId>org.o-ran-sc.scp-oam-modeling.features</groupId>
     <artifactId>x-ran-ru-fh-model</artifactId>
     <version>0.7.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
