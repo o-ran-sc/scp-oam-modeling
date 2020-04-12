@@ -32,3 +32,5 @@ etc/
 node_modules/
 .fbExcludeFilterFile
 *.md.html
+_3GPP
+
