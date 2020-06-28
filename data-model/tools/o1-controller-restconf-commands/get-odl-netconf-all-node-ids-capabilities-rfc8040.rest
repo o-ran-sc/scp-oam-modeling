@@ -1,0 +1,3 @@
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf?content=nonconfig&fields=node(node-id;netconf-node-topology:available-capabilities/available-capability/capability) 
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

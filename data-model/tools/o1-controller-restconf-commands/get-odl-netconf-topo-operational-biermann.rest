@@ -1,0 +1,4 @@
+GET {{baseUrl}}/restconf/operational/network-topology:network-topology/topology/topology-netconf
+Authorization: Basic {{user}} {{password}}
+Accept: application/json
+Content-Type: application/json

@@ -1,0 +1,16 @@
+POST {{baseUrl}}/restconf/operations/data-provider:create-network-element-connection
+Authorization: Basic {{user}} {{password}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "data-provider:input": {
+    "id": "new-mountpoint-name",
+    "node-id": "new-mountpoint-name",
+    "host": "10.10.10.10",
+    "port": "830",
+    "username": "netconf",
+    "password": "netconf",
+    "is-required": "true"
+  }
+}

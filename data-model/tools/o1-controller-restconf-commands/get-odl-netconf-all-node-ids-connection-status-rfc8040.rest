@@ -1,0 +1,3 @@
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf?fields=node(node-id;netconf-node-topology:connection-status) 
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

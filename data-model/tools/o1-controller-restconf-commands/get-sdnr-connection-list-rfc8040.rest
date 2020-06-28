@@ -1,0 +1,23 @@
+POST {{baseUrl}}/rests/operations/data-provider:read-network-element-connection-list HTTP/1.1
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+Content-Type: application/yang-data+json
+
+{
+    "data-provider:input": {
+        "filter": [{
+                "property": "status",
+                "filtervalue": "Connecting"
+            }
+        ],
+        "sortorder": [{
+                "property": "node-id",
+                "sortorder": "descending"
+            }
+        ],
+        "pagination": {
+            "size": 10,
+            "page": 1
+        }
+    }
+}

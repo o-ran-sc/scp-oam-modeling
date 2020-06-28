@@ -1,0 +1,3 @@
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{mountPoint}}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point=e6c5831d-37ce-4ef4-b075-733f6791bde1/layer-protocol=pRppR4R/wire-interface-2-0:wire-interface-pac/wire-interface-configuration?fields=interface-name;problem-kind-severity-list(problem-kind-name)
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

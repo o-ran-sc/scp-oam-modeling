@@ -1,0 +1,10 @@
+{
+  "rest-client.environmentVariables": {
+    "local": {
+      "baseUrl": "http://localhost:8181",
+      "user": "admin",
+      "password": "admin",
+      "mountPoint": "ntsim_onf_core_model_1_4-0_51009",
+    },
+  }
+}

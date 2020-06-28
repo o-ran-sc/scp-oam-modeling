@@ -1,0 +1,3 @@
+GET {{baseUrl}}/restconf/modules HTTP/1.1
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

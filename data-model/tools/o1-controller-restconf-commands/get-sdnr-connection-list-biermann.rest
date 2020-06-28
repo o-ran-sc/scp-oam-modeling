@@ -1,0 +1,23 @@
+POST {{baseUrl}}/restconf/operations/data-provider:read-network-element-connection-list HTTP/1.1
+Authorization: Basic {{user}} {{password}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "data-provider:input": {
+        "filter": [{
+                "property": "status",
+                "filtervalue": "Connecting"
+            }
+        ],
+        "sortorder": [{
+                "property": "node-id",
+                "sortorder": "descending"
+            }
+        ],
+        "pagination": {
+            "size": 10,
+            "page": 1
+        }
+    }
+}

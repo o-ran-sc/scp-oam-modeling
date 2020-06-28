@@ -1,0 +1,3 @@
+GET {{baseUrl}}/rests/data/network-topology:network-topology?content=nonconfig 
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
