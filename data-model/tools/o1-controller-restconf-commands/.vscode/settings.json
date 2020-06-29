@@ -1,7 +1,19 @@
 {
   "rest-client.environmentVariables": {
     "local": {
-      "baseUrl": "http://localhost:8181",
+      "baseUrl": "http://10.20.11.118:8181",
+      "user": "admin",
+      "password": "admin",
+      "mountPoint": "ntsim_onf_core_model_1_4-0_51009",
+    },
+    "public": {
+      "baseUrl": "https://sdn-r-dev.open5g-test.com",
+      "user": "admin",
+      "password": "Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U",
+      "mountPoint": "ntsim_onf_core_model_1_4-0_51009",
+    },
+    "alex-ws": {
+      "baseUrl": "http://46.38.251.235:8181",
       "user": "admin",
       "password": "admin",
       "mountPoint": "ntsim_onf_core_model_1_4-0_51009",

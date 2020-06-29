@@ -1,0 +1,24 @@
+@node[1]=O-RAN-FH-NTS-Manager
+@node[2]=Core14-ONF-NTS-Manager
+@node[3]=Core12-ONF-NTS-Manager
+@node[4]=xran-FH-NTS-Manager
+
+### 
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node[1]}}/yang-ext:mount/network-topology-simulator:simulator-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+
+### 
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node[2]}}/yang-ext:mount/network-topology-simulator:simulator-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+
+### 
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node[3]}}/yang-ext:mount/network-topology-simulator:simulator-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+
+###
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node[4]}}/yang-ext:mount/network-topology-simulator:simulator-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

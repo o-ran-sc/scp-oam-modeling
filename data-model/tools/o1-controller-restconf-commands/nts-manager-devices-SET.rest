@@ -1,0 +1,40 @@
+@node=O-RAN-FH-NTS-Manager
+#@node=Core14-ONF-NTS-Manager
+#@node=Core12-ONF-NTS-Manager
+#@node=xran-FH-NTS-Manager
+PUT {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node}}/yang-ext:mount/network-topology-simulator:simulator-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+Content-Type: application/yang-data+json
+
+{
+  "network-topology-simulator:simulator-config": {
+    "ves-endpoint-details": {
+      "ves-endpoint-port": 8080,
+      "ves-endpoint-auth-method": "no-auth",
+      "ves-registration": false,
+      "ves-endpoint-ip": "10.20.11.118"
+    },
+    "netconf-call-home": false,
+    "simulated-devices": 0,
+    "mounted-devices": 0,
+    "controller-details": {
+      "controller-password": "admin",
+      "controller-ip": "10.20.11.118",
+      "netconf-call-home-port": 6666,
+      "controller-username": "admin",
+      "controller-port": 8181
+    },
+    "notification-config": {
+      "is-netconf-available": true,
+      "ves-heartbeat-period": 0,
+      "is-ves-available": false,
+      "fault-notification-delay-period": [
+        10,
+        40,
+        50,
+        60
+      ]
+    }
+  }
+}

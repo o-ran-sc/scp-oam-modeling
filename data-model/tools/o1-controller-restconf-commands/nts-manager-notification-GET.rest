@@ -1,0 +1,7 @@
+#@node=O-RAN-FH-NTS-Manager
+#@node=Core14-ONF-NTS-Manager
+@node=Core12-ONF-NTS-Manager
+#@node=xran-FH-NTS-Manager
+GET {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node}}/yang-ext:mount/network-topology-simulator:simulator-config/notification-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json

@@ -1,0 +1,19 @@
+#@node=O-RAN-FH-NTS-Manager
+#@node=Core14-ONF-NTS-Manager
+@node=Core12-ONF-NTS-Manager
+#@node=xran-FH-NTS-Manager
+PUT {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node}}/yang-ext:mount/network-topology-simulator:simulator-config/notification-config
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+Content-Type: application/yang-data+json
+
+{
+  "network-topology-simulator:notification-config": {
+    "is-netconf-available": true,
+    "ves-heartbeat-period": 0,
+    "is-ves-available": false,
+    "fault-notification-delay-period": [
+      60, 50, 40, 10
+    ]
+  }
+}
