@@ -1,0 +1,43 @@
+################################################################################
+# Copyright 2020 highstreet technologies GmbH and others
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+@node=my-new-mount-point-2
+PUT {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node}}
+Authorization: Basic {{user}} {{password}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "network-topology:node": [
+    {
+      "node-id": "{{node}}",
+      "netconf-node-topology:host": "127.0.0.1",
+      "netconf-node-topology:port": 830,
+      "netconf-node-topology:password": "netconf",
+      "netconf-node-topology:username": "netconf",
+      "netconf-node-topology:sleep-factor": 1.5,
+      "netconf-node-topology:tcp-only": false,
+      "netconf-node-topology:reconnect-on-changed-schema": true,
+      "netconf-node-topology:default-request-timeout-millis": 60000,
+      "netconf-node-topology:connection-timeout-millis": 20000,
+      "netconf-node-topology:max-connection-attempts": 100,
+      "netconf-node-topology:between-attempts-timeout-millis": 2000,
+      "netconf-node-topology:keepalive-delay": 120,
+      "netconf-node-topology:concurrent-rpc-limit": 0,
+      "netconf-node-topology:actor-response-wait-time": 5
+    }
+  ]
+}
+

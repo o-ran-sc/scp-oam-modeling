@@ -1,0 +1,42 @@
+################################################################################
+# Copyright 2020 highstreet technologies GmbH and others
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+@node=my-new-mount-point-2
+PUT {{baseUrl}}/rests/data/network-topology:network-topology/topology=topology-netconf/node={{node}}
+Authorization: Basic {{user}} {{password}}
+Accept: application/yang-data+json
+Content-Type: application/yang-data+json
+
+{
+  "network-topology:node": [
+    {
+      "node-id": "{{node}}",
+      "host": "127.0.0.1",
+      "port": 830,
+      "password": "netconf",
+      "username": "netconf",
+      "sleep-factor": 1.5,
+      "tcp-only": false,
+      "reconnect-on-changed-schema": true,
+      "default-request-timeout-millis": 60000,
+      "connection-timeout-millis": 20000,
+      "max-connection-attempts": 100,
+      "between-attempts-timeout-millis": 2000,
+      "keepalive-delay": 120,
+      "concurrent-rpc-limit": 0,
+      "actor-response-wait-time": 5
+    }
+  ]
+}
