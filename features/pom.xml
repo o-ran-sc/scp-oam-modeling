@@ -21,7 +21,7 @@
 
   <groupId>org.o-ran-sc.scp-oam-modeling</groupId>
   <artifactId>features-top</artifactId>
-  <version>0.7.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>o-ran-sc modeling features</name>
