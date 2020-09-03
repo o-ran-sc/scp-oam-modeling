@@ -2,4 +2,3 @@
 #
 0207ba9231e726341c899622bbf5d19fe6c5dfa4                                         	saml/oran-gerrit-scp-oam-modeling-committers
 add1d629e64dce7097223c93ca6e710c1460b5ba                                         	GitHub Replication
-ldap:cn=oran-gerrit-scp-oam-modeling-committers,ou=Groups,dc=freestandards,dc=org	ldap/oran-gerrit-scp-oam-modeling-committers
