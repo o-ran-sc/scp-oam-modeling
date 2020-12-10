@@ -1,0 +1,672 @@
+module fd-relay {
+    yang-version 1.1;
+    namespace "urn:rdns:com:kumunetworks:yang:fd-relay";
+    prefix "fdr";
+
+    import "ietf-inet-types" {
+        prefix "inet";
+    }
+
+    import ietf-yang-types {
+      prefix yang;
+    }
+
+    import "ietf-interfaces" {
+        prefix "if";
+    }
+
+    organization "Kumu Networks";
+    contact "Brad Davis";
+
+    description "Full-duplex relay data model";
+
+/* ***********************************************
+                REVISIONS
+   *********************************************** */
+
+   revision "2020-10-13" {
+        description "Replace custom relay-interfaces with standard ietf-interfaces";
+        reference "redmine 34169";
+   }
+   revision "2020-10-01" {
+         description "Change SINR to type dB to include fractional portion, and PLMN_ID to string";
+         reference "redmine 32899";
+   }
+    revision "2020-09-14" {
+          description "Add additional parameters reboot, state_machine_state, alarm details and convert pci-lock and pci-blacklist to lists";
+          reference "redmine 34005, 33787, 32899";
+    }
+    revision "2019-09-09" {
+        description "Updated to resolve bugs";
+        reference "Relay SoW";
+    }
+    revision "2019-09-02" {
+         description "Initial revision.";
+         reference "N/A";
+    }
+
+/* ***********************************************
+                TYPE DEFINITIONS
+   *********************************************** */
+
+    typedef lte-pci {
+        type uint16 {
+            range 0..503;
+        }
+        description  "LTE Physical Cell ID";
+    }
+
+    typedef lte-band {
+        type uint8 {
+            range "2 | 4 | 12 | 13 | 17";
+        }
+        description "LTE Band";
+    }
+
+    typedef lte-bw {
+        type uint8 {
+            range "5 | 10 | 15 | 20";
+        }
+        description  "LTE Bandwidth";
+    }
+
+    typedef dBm {
+        type decimal64 {
+            fraction-digits 2;
+        }
+        description "decibels mW";
+    }
+
+    typedef dB {
+        type decimal64 {
+            fraction-digits 2;
+        }
+        description "decibels";
+    }
+
+/* ***********************************************
+                TYPE DEFINITIONS
+   *********************************************** */
+
+    grouping canx-module {
+        description 'cancellation module config and state';
+        container state {
+            config false;
+            description 'cancellation module state information';
+            leaf calibrated {
+                type boolean;
+                description 'cancellation module calibration state';
+            }
+
+            container mimo_mode {
+                description 'mimo configuration';
+                leaf-list tx_mode {
+                    type uint8 {
+                        range 0..1;
+                    }
+                    description 'configured number of transmitters';
+                }
+                leaf-list rx_mode {
+                    type uint8 {
+                        range 0..1;
+                    }
+                    description 'configured number of receivers';
+                }
+            }
+
+            leaf num_active_alarms {
+                type uint8;
+                description 'number of active alarms on module';
+            }
+
+            list active_alarms {
+                key name;
+                description 'list of active alarms on module';
+
+                leaf name {
+                  type string;
+                  description "name of alarm";
+                }
+
+                leaf state {
+                  type boolean;
+                  description "true if alarm is currently active";
+                }
+
+                leaf description {
+                    type string;
+                    description 'description of module alarm';
+                }
+
+                leaf severity {
+                    type uint8;
+                    description 'module alarm severity';
+                }
+            }
+
+            container powers {
+                description 'current power readings';
+                leaf t0_power {
+                    type dBm;
+                    description 'tx0 path power (module-referred)';
+                }
+                leaf t1_power {
+                    type dBm;
+                    description 'tx1 path power (module-referred)';
+                }
+                leaf r0_power {
+                    type dBm;
+                    description 'rx0 path power (module-input referred)';
+                }
+                leaf r1_power {
+                    type dBm;
+                    description 'rx1 path power (module-input referred)';
+                }
+            }
+
+            leaf-list installed-versions {
+                type string;
+                description "list of installed software and versioning";
+            }
+
+            leaf center-frequency {
+                type decimal64 {
+                    fraction-digits 1;
+                }
+                description 'cancellation module configured center frequency';
+            }
+            leaf bandwidth {
+                type uint8 {
+                    range "5 | 10 | 15 | 20";
+                }
+                description 'cancellation module configured bandwidth';
+            }
+            leaf tx_sample_power {
+                type int8 {
+                    range -5..24;
+                }
+                description 'cancellation module configured input-referred tx power';
+            }
+            leaf rx_gain {
+                type string;
+                description 'cancellation module configured rx gain';
+            }
+
+            leaf local_ip_addr {
+                type inet:ip-address;
+                description 'cancellation module local configuration IP addr';
+            }
+        }
+    }    // grouping canx-module
+
+    grouping band-info {
+        description "The current state within one band";
+        leaf band {
+            type lte-band;
+            description "active primary band";
+        }
+
+        leaf dl-earfcn {
+            type uint16;
+            description "DL EARFCN";
+        }
+
+        leaf bw {
+          type lte-bw;
+          description "LTE Channel bandwidth in MHz";
+        }
+
+        leaf output-power {
+            type dBm;
+            description 'TX Output power in PUSCH';
+        }
+
+        leaf pci {
+            type lte-pci;
+            description 'Connected PCI';
+        }
+
+        leaf RSSI {
+            type dBm;
+            description "Backhaul link RSSI in dBm";
+        }
+
+        leaf RSRQ {
+            type int16;
+            description "RSRQ";
+        }
+
+        leaf-list rsrp {
+            type dBm;
+            description "per-antenna RSRP";
+        }
+
+        leaf-list sinr {
+            type dB;
+            description "per-antenna SINR";
+        }
+
+        list neighboring-cell-measurements {
+            key "pci";
+
+            leaf pci {
+                type lte-pci;
+                description "PCI";
+            }
+
+            leaf dlearfcn {
+                type uint16;
+                description "DLEARFCN for neighboring cell";
+            }
+
+            leaf rsrp {
+                type dBm;
+                description "RSRP";
+            }
+            description "neighboring cell measurements list";
+        }   // list neighboring-cell-measurements
+    }   // grouping band-info
+
+    grouping relay-top {
+        description "Top level grouping for relay data (configuration & state)";
+
+
+        container networking {
+            description "networking state & config data";
+            container config {
+                description "networking configuration data";
+
+                container force-mtu {
+                    description 'MTU Forced on system for all UE and ethernet interfaces, to avoid fragmentation';
+                    leaf enabled {
+                        type boolean;
+                        description 'is force MTU enabled for all interfaces (eth and ue)';
+                    }
+                    leaf mtu {
+                        type uint16;
+                        description 'MTU to force on all interfaces';
+                    }
+                }
+            }
+            container state {
+                config false;
+                description "networking state data";
+
+                leaf-list interfaces {
+                    type if:interface-ref;
+                    description 'list of all system network interfaces,
+                        including traffic counters, etc.';
+
+                }
+            }
+        }
+
+        container dhcp-server {
+            description 'container for dhcp-server';
+            container state {
+                config false;
+                description 'DHCP server state';
+
+                list leases {
+                    key "ip";
+                    unique "mac-address";
+
+                    leaf ip {
+                        type inet:ip-address;
+                        description "IP Address";
+                    }
+
+                    leaf mac-address {
+                        type yang:phys-address;
+                        description "Lease MAC Address";
+                    }
+                    description "DHCP lease information";
+                }
+            }
+        }
+
+        container software {
+            config false;
+            description "Software information";
+            leaf version {
+                type string;
+                description "Relay software version";
+            }
+        }
+
+        container cancellation {
+            description "container for cancellation modules' state and config data";
+            container ul-module {
+                description 'uplink module state and config';
+                uses canx-module;
+            }
+            container dl-module {
+                description 'downlink module state and config';
+                uses canx-module;
+            }
+        }
+
+        container sys-health {
+            description 'relay system health status';
+            container state {
+                config false;
+                description 'relay system health status';
+
+                leaf system-uptime {
+                    type uint32;
+                    description "time since system reboot in seconds";
+                }
+
+                leaf temperature {
+                    type int16;
+                    description "temperature in deg C";
+                }
+
+                leaf num_active_alarms {
+                    type uint8;
+                    description 'number of active alarms on relay';
+                }
+
+                list active_alarms {
+                    key name;
+                    description 'list of active alarms on relay';
+
+                    leaf name {
+                      type string;
+                      description "name of alarm";
+                    }
+
+                    leaf state {
+                      type boolean;
+                      description "true if alarm is currently active";
+                    }
+
+                    leaf description {
+                        type string;
+                        description 'description of relay alarm';
+                    }
+
+                    leaf severity {
+                        type uint8;
+                        description 'relay alarm severity';
+                    }
+                }
+
+                leaf state_machine_state {
+                  type string;
+                  description "Current state of the state machine";
+                }
+            }
+            container control {
+              description 'relay remote control';
+              leaf reboot {
+                type boolean;
+                description "Reboot relay";
+              }
+            }
+        }
+
+        container ue {
+            description 'cellular modem status & configuration';
+
+            container config {
+                description 'cellular modem configuration';
+                list pci-lock {
+                    key pci;
+                    description 'pci lock configuration';
+
+                    leaf enabled {
+                        type boolean;
+                        description 'pci lock enabled/disabled';
+                    }
+                    leaf pci {
+                        type lte-pci;
+                        description 'pci to lock';
+                    }
+                    leaf earfcn {
+                        type uint32;
+                        description 'earfcn to lock';
+                    }
+                }
+                list pci-blacklist {
+                    key lte-pci;
+                    description 'List of PCIs that will never be attached too';
+
+                    leaf lte-pci {
+                        type lte-pci;
+                        description 'PCI which will never be attached too';
+                    }
+                }
+                container sim-config {
+                    description 'SIM Card configuration';
+                    leaf sim-cpin {
+                        type string;
+                        description "SIM Card PIN";
+                    }
+                }
+
+                container heartbeat {
+                    description 'heartbeat ip configuration';
+                    leaf enabled {
+                        type boolean;
+                        description "Enable/disable heartbeat functionality";
+                    }
+
+                    leaf heartbeat-server-ip {
+                        type inet:ip-address;
+                        description "Heartbeat server IP to check latency";
+                    }
+
+                    leaf heartbeat-interval {
+                        type uint16;
+                        description "Interval at which to check heartbeat";
+                    }
+                }
+
+                container rf-config {
+                    description 'rf configuration for ue';
+                    leaf enable-band-2 {
+                        type boolean;
+                        description "enable band 2";
+                    }
+                    leaf enable-band-4 {
+                        type boolean;
+                        description "enable band 4";
+                    }
+                    leaf enable-band-12 {
+                        type boolean;
+                        description "enable band 12";
+                    }
+                    leaf enable-band-13 {
+                        type boolean;
+                        description "enable band 13";
+                    }
+                    leaf enable-band-17 {
+                        type boolean;
+                        description "enable band 17";
+                    }
+                    leaf disable-carrier-aggregration {
+                      type boolean;
+                      description "Enable/disable carrier aggregation";
+                    }
+                }
+
+            }
+            container state {
+                config false;
+                description 'cellular modem state';
+
+                list ip-address {
+                    key "apn";
+                    unique "ip";
+                    leaf apn {
+                        type string;
+                        description 'APN associated with IP address';
+                    }
+
+                    leaf ip {
+                        type inet:ip-address;
+                        description "IP Address";
+                    }
+
+                    leaf subnet {
+                        type inet:ip-address;
+                        description "Subnet Address";
+                    }
+                    description "ip address and apn information";
+                }
+
+                leaf versions {
+                    type string;
+                    description "UE firmware version";
+                }
+
+                leaf latency {
+                    type uint16;
+                    description "last reported heartbeat latency";
+                }
+
+                leaf attached {
+                    type boolean;
+                    description "true if ue is attached to network";
+                }
+                leaf conn-uptime {
+                    type uint32;
+                    description "connection uptime in seconds";
+                }
+
+                leaf ECI {
+                    type string;
+                    description "ECI";
+                }
+
+                leaf PLMN_ID {
+                    type string;
+                    description "PLMN ID";
+                }
+
+                leaf dl-data-rate {
+                    type uint32;
+                    description "Current DL Data Rate in bits/second";
+                }
+
+                leaf ul-data-rate {
+                    type uint32;
+                    description "Current UL Data Rate in bits/second";
+                }
+
+                leaf dl-mcs {
+                    type uint8;
+                    description "DL MCS Index";
+                }
+
+                container sim-info {
+                    description 'SIM Card and subscription related information';
+                    leaf sim-card-present {
+                        type boolean;
+                        description "SIM Card present in unit";
+                    }
+
+                    leaf imei {
+                        type string;
+                        description "IMEI Number as ASCII string base 10";
+                    }
+
+                    leaf imsi {
+                        type string;
+                        description "ISMI Number as ASCII string base 10";
+                    }
+                }
+
+                container heartbeat-status {
+                    description 'heartbeat status';
+                    leaf reachable {
+                        type boolean;
+                        description "True if heartbeat IP is reachable";
+                    }
+                }
+                container primary-band-info {
+                    description 'LTE primary carrier information';
+                    uses band-info;
+                }
+
+                container ca-band-info {
+                    description 'Secondary CA band information';
+                    uses band-info;
+                }
+
+                leaf lan_mac {
+                    type yang:phys-address;
+                    description 'MAC address for UE LAN port';
+                }
+
+                leaf serial_number {
+                    type string;
+                    description "UE serial number";
+                }
+
+            }    // container state
+        }    // container ue
+
+        container enb-info {
+            description 'eNB Information - Config & State';
+            container config {
+                description "Relevant eNB Information for relay small cell";
+
+                leaf bandwidth {
+                    type lte-bw;
+                    description 'eNB Bandwidth in active bands';
+                }
+                leaf tx-power-per-antenna_0 {
+                    type dBm;
+                    description 'TX Output power per antenna 0';
+                }
+                leaf tx-power-per-antenna_1 {
+                    type dBm;
+                    description 'TX Output power per antenna 1';
+                }
+                leaf dlearfcn {
+                    type uint32;
+                    description 'eNB DLEARFCN';
+                }
+                leaf ulearfcn {
+                    type uint32;
+                    description 'eNB ULEARFCN';
+                }
+            }
+        }
+
+        container update {
+            description 'firmware upgrade';
+            container config {
+                description "Configuration for pushing firmware upgrade";
+
+                leaf URL {
+                    type string;
+                    description 'URL to find the firmware ugprade';
+                }
+                leaf username {
+                    type string;
+                    description 'username for the file server';
+                }
+                leaf password {
+                    type string;
+                    description 'password for the file server';
+                }
+                leaf enable {
+                    type boolean;
+                    description 'if true, trigger upgrade';
+                }
+            }
+        }
+
+    }
+
+/* ***********************************************
+                INSTANTIATION
+   *********************************************** */
+
+    uses relay-top;
+
+
+}
