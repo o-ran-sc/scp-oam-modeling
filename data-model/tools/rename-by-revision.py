@@ -45,5 +45,5 @@ for fname in args.yang_files:
             if len(targ_dir)==0:
                 os.rename(fname,targ_module+'@'+r+'.yang')
             else:
-                os.rename(fname,targ_dir+'/'+targ_module+'@'+r+'.yang'
+                os.rename(fname,targ_dir+'/'+targ_module+'@'+r+'.yang')
             break
