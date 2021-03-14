@@ -1,6 +1,6 @@
 module o-ran-sc-types-v1 {
     yang-version 1.1;
-    namespace "urn:o-ran:sc:types:1.0";
+    namespace "urn:o-ran-sc:yang:o-ran-sc-types-v1";
     prefix ot;
 
     organization
@@ -10,7 +10,7 @@ module o-ran-sc-types-v1 {
     description
       "This module defines common type definitions related to O-RAN.
        
-       Copyright 2020 the O-RAN Alliance.
+       Copyright 2021 the O-RAN Software Community.
        
        Licensed under the Apache License, Version 2.0 (the 'License');
        you may not use this file except in compliance with the License.
@@ -23,6 +23,14 @@ module o-ran-sc-types-v1 {
        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
        See the License for the specific language governing permissions and
        limitations under the License.";
+
+    revision 2021-03-09 {
+      description
+        "The namespace was updated according to O-RAN-SC yang guidelines.
+        The namespace must end with the full module name.";
+      reference
+        "https://jira.o-ran-sc.org/browse/OAM-168";
+    }
 
     revision 2020-02-20 {
         description
@@ -238,7 +246,7 @@ module o-ran-sc-types-v1 {
     }
 
     typedef connection-status-type {
-        // TODO swtitch to identity
+        // TODO switch to identity
         type enumeration {
             enum not-specified {
                 description

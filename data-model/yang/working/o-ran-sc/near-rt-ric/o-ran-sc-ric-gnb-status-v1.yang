@@ -1,6 +1,6 @@
 module o-ran-sc-ric-gnb-status-v1 {
     yang-version 1.1;
-    namespace "urn:o-ran:ric:gnb-status:1.0";
+    namespace "urn:o-ran-sc:yang:o-ran-sc-ric-gnb-status-v1";
     prefix rgnb;
 
     import o-ran-sc-ric-xapp-desc-v1 {
@@ -25,7 +25,7 @@ module o-ran-sc-ric-gnb-status-v1 {
     description
       "This module defines the gNB status and other information visible to operators
        
-       Copyright 2020 the O-RAN Alliance.
+       Copyright 2021 the O-RAN Software Community.
        
        Licensed under the Apache License, Version 2.0 (the 'License');
        you may not use this file except in compliance with the License.
@@ -78,12 +78,12 @@ module o-ran-sc-ric-gnb-status-v1 {
         leaf plmn-id {
             type ot:sized-printable-string;
             description
-              "PLMN id TODO: who is responsable for thiis identifier?";
+              "PLMN id TODO: who is responsible for this identifier?";
         }
         leaf nb-id {
             type ot:sized-printable-string;
             description
-              "eNB id TODO: who is responsibale for this identifier?";
+              "eNB id TODO: who is responsible for this identifier?";
         }
         leaf node {
             type identityref {
