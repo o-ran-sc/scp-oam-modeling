@@ -49,18 +49,20 @@ module o-ran-sc-ric-alarms-v1 {
        Instructions:
        Check if reconnect happened, e.g. using the health check in RIC-95.";
   }
+
   identity time-out {
     base alarm-type-id;
     description
       "Internal routing table update distribution might be incomplete
-	     due to time out.
+             due to time out.
        Instructions:
        Operator to check if there were any failures in any of the components
-		   involved (xApp restarts, for example)if no such failures, operator
-		   might have to update time out settings in the configuration to
-		   adjust RIC system to scheduling latencies of the underlying cloud
-		   platform.";
+        \t   involved (xApp restarts, for example)if no such failures, operator
+        \t   might have to update time out settings in the configuration to
+        \t   adjust RIC system to scheduling latencies of the underlying cloud
+        \t   platform.";
   }
+
   identity overload {
     base alarm-type-id;
     description

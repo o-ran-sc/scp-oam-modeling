@@ -1,6 +1,6 @@
 module o-ran-sc-hardware-v1 {
   yang-version 1.1;
-  namespace "urn:o-ran:sc:hardware:1.0";
+  namespace "urn:o-ran-sc:yang:o-ran-sc-hardware-v1";
   prefix ohw;
 
   import o-ran-sc-root-v1 {
@@ -17,10 +17,10 @@ module o-ran-sc-hardware-v1 {
   contact
     "www.o-ran-sc.org";
   description
-    "This module augements the  o-ran-sc-controlled-element and  
+    "This module augments the  o-ran-sc-controlled-element and
      o-ran-sc-controlled-function object by adding ietf-hardware.
 
-     Copyright 2020 the O-RAN Alliance.
+     Copyright 2021 the O-RAN Software Community.
 
      Licensed under the Apache License, Version 2.0 (the 'License');
      you may not use this file except in compliance with the License.
@@ -34,6 +34,13 @@ module o-ran-sc-hardware-v1 {
      See the License for the specific language governing permissions and
      limitations under the License.";
 
+  revision 2021-03-09 {
+    description
+      "The namespace was updated according to O-RAN-SC yang guidelines.
+       The namespace must end with the full module name.";
+    reference
+      "https://jira.o-ran-sc.org/browse/OAM-168";
+  }
   revision 2020-03-09 {
     description
       "initial revision";
@@ -42,7 +49,7 @@ module o-ran-sc-hardware-v1 {
   }
 
   /*
-   * Typedefs
+   * Type definitions
    */
 
   typedef hardware-ref {
@@ -59,13 +66,13 @@ module o-ran-sc-hardware-v1 {
    */
 
   grouping hardware-grp {
-    leaf-list hardware-reference  {
+    leaf-list hardware-reference {
       type hardware-ref;
       config false;
-      description 
+      description
         "A list of ietf-hardware references using the hardware name as key.";
     }
-    description 
+    description
       "A group adding ietf-hardware references.";
   }
 
@@ -76,14 +83,14 @@ module o-ran-sc-hardware-v1 {
   augment "/root:controlled-element" {
     uses hardware-grp;
     description
-      "An augmentation, which adds ietf-hardware 
+      "An augmentation, which adds ietf-hardware
        to root:controlled-element.";
   }
 
   augment "/root:controlled-element/root:controlled-function" {
     uses hardware-grp;
     description
-      "An augmentation, which adds ietf-hardware 
+      "An augmentation, which adds ietf-hardware
        to root:controlled-function.";
   }
 }
