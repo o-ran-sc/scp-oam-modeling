@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb74dff6_a3261d10",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-03-15T10:58:33Z",
+      "side": 1,
+      "message": "In case future changes are not backward compatible, the namespace should be changed. The easiest way is to use a kind of \"version-number\" - or backward-compatibility indicator from the beginning in the namespace.",
+      "parentUuid": "5f9b7f28_b80bf988",
+      "range": {
+        "startLine": 3,
+        "startChar": 31,
+        "endLine": 3,
+        "endChar": 32
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8c1e34_677f3a1f",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2021-03-15T03:30:57Z",
       "side": 1,
       "message": "While it is nice to have a short prefix, they start generating conflict very quickly. Suggest that the prefix be expanded to min of four characters, e.g. duhw.",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 11
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16714e2_e77eb668",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-03-15T10:58:33Z",
+      "side": 1,
+      "message": "agreed!",
+      "parentUuid": "8e8c1e34_677f3a1f",
       "range": {
         "startLine": 4,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5486b687_17e076b7",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-03-15T10:58:33Z",
+      "side": 1,
+      "message": "agreed!",
+      "parentUuid": "30344722_5b0e9be1",
+      "range": {
+        "startLine": 93,
+        "startChar": 75,
+        "endLine": 93,
+        "endChar": 76
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6bd671a_175d7612",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8dfeae60_8c9048d1",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-03-15T10:58:33Z",
+      "side": 1,
+      "message": "There is are reasonable likelihood that a \"connection-status\" can be used also by other yang modules.",
+      "parentUuid": "e6bd671a_175d7612",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "178da923_a64077ef",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2021-03-15T03:30:57Z",
       "side": 1,
       "message": "Generally, as a rule, if the grouping is used only once, it is better to define its contents inline, instead of using a grouping. It also improves readability of the code.",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a53ed8_cee964c8",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-03-15T10:58:33Z",
+      "side": 1,
+      "message": "But nobody knows, when if and when it will be used in future by other modules. On big issue for example, if somebody would like to turn he container \"ietf-interfaces\" into a list or \"ietf-interfaces\" - if the ietf-interfaces.yang would have use a grouping then everybody could import the grouping in new models.",
+      "parentUuid": "178da923_a64077ef",
       "range": {
         "startLine": 162,
         "startChar": 4,
