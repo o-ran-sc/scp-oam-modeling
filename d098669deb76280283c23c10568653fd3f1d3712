@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db396a2a_f2c14c72",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-03-16T23:42:05Z",
+      "side": 1,
+      "message": "IETF is working on defining a semantic version schema for module revisions that allows you to indicate Non Backward Compatible (NBC) changes. See https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-02\n\nA change to the namespace of a model however, implies a completely new model, not a non backward compatible mode, which I understand is not the intent.",
+      "parentUuid": "cb74dff6_a3261d10",
+      "range": {
+        "startLine": 3,
+        "startChar": 31,
+        "endLine": 3,
+        "endChar": 32
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8c1e34_677f3a1f",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "But nobody knows, when if and when it will be used in future by other modules. On big issue for example, if somebody would like to turn he container \"ietf-interfaces\" into a list or \"ietf-interfaces\" - if the ietf-interfaces.yang would have use a grouping then everybody could import the grouping in new models.",
       "parentUuid": "178da923_a64077ef",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "d098669deb76280283c23c10568653fd3f1d3712",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a682306_470b9799",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-03-16T23:42:05Z",
+      "side": 1,
+      "message": "ietf-interfaces (plural) is a container that already contains a list of interface (singular). I am not clear on why you would like to import a grouping of a list of interfaces. If you want to add a new interface, you can augment ietf-interfaces and add a new interface definition without importing a grouping. See Appendix A of RFC 8343 for an example.\n\nThere are several ways to \"import\" definitions without using groupings. Groupings are like #include in C language, where you need the replicate the schema definition verbatim. Therefore groupings should not be defined with the intention that someone in the future might need to use it. Besides groupings make the model difficult to read and understand because of indirections.",
+      "parentUuid": "b2a53ed8_cee964c8",
       "range": {
         "startLine": 162,
         "startChar": 4,
