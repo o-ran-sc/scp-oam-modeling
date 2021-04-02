@@ -1,3 +1,3 @@
 # Modeling
 
-A repository to develop and share information and data models.
+A repository to develop and share information models and data models.
