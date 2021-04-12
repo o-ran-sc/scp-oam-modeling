@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f57e552_62dd9e5d",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000103
+      },
+      "writtenOn": "2021-04-12T17:15:07Z",
+      "side": 1,
+      "message": "perhaps the descriptions are reversed?",
+      "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
