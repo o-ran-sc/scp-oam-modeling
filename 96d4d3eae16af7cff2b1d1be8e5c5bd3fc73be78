@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b5997a4_ff36a65f",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-04-15T05:32:07Z",
+      "side": 1,
+      "message": "I have to agree that the description is confusing. I think what you meant to say is that \"The resource is not functional.\" for DISABLED, and to say that \"The resource is functional.\" for ENABLED.",
+      "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f57e552_62dd9e5d",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 2
@@ -13,6 +30,40 @@
       "writtenOn": "2021-04-12T17:15:07Z",
       "side": 1,
       "message": "perhaps the descriptions are reversed?",
+      "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a53294d_fc545060",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-04-15T05:32:07Z",
+      "side": 1,
+      "message": "Is that the \"connection should not be established\", or is that the \"connection cannot be established\".",
+      "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363be11d_fdc93158",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-04-15T05:32:07Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
