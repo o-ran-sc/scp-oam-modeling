@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c0fdf5_e93e3730",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000382
+      },
+      "writtenOn": "2021-04-15T16:33:55Z",
+      "side": 1,
+      "message": "Sorry to bring this up. After the discussion today, it is clear that there is still some confusion around what this field reflects. If this field reflects the state of the connection between O-DU and O-RU (something that the description should say), regardless of its history, then if anything this field should be used for indicating the status of the connection between O-DU and O-RU rather than cell-state.\n\nMy understanding of cell-state, the attribute defined above, is that cell-state is reflection of the state of the entire cell, not just of the connection between O-DU and O-RU.",
+      "revId": "87347e9428c086b96ac86153b206789717e4a585",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
