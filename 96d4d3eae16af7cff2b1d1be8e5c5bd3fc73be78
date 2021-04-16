@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "47a88bf7_3b5d4120",
+        "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000482
+      },
+      "writtenOn": "2021-04-16T17:25:15Z",
+      "side": 1,
+      "message": "In both LOCKED and UNLOCKED state the description says \"O-DU will shut down the connection to the related O-RU\". Should it not be \"O-DU will establish the connection with the related O-RU\" in UNLOCKED state?",
+      "parentUuid": "c4c299f6_aa82e60a",
+      "revId": "96d4d3eae16af7cff2b1d1be8e5c5bd3fc73be78",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a53294d_fc545060",
         "filename": "data-model/yang/working/o-ran-sc/o-ran-du/o-ran-sc-du-hello-world.yang",
         "patchSetId": 2
