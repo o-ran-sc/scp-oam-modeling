@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b511523a_8f4c2f94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-05-02T16:25:13Z",
+      "side": 1,
+      "message": "Hi John, \n\nfinally I could update the OpenAPI for the use case.\nHere an example setting the \n- administrative-state to UNLOCKED \n- at O-RAN-DU-01 \n- for the connection to O-RAN-RU-01 as CURL\n\ncurl -X PUT \"http://[2001:db8:1:1::21]:8181/rests/data/network-topology:network-topology/topology\u003dtopology-netconf/node\u003dO-RAN-DU-01/yang-ext:mount/o-ran-sc-du-hello-world:network-function/du-to-ru-connection\u003dO-RAN-RU-01\" -H \"accept: application/json\" -H \"Content-Type: application/json\" -d \"{\\\"o-ran-sc-du-hello-world:du-to-ru-connection\\\":[{\\\"name\\\":\\\"O-RAN-RU-01\\\",\\\"administrative-state\\\":\\\"UNLOCKED\\\"}]}\"\n\nPlease let me know, if I should merge.\n\nHave fun,\nMartin",
+      "revId": "0f3eeb489c0636708e4e17f17949dd1d1220eee1",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
