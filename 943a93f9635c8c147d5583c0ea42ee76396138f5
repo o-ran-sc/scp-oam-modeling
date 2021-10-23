@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9d51533_7a99d399",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-23T15:05:42Z",
+      "side": 1,
+      "message": "demx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-229)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-229)\n└─ $ ▶ yanglint \n\u003e add o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-229)\n└─ $ ▶",
+      "revId": "943a93f9635c8c147d5583c0ea42ee76396138f5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
