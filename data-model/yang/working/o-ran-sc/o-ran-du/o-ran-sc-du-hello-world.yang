@@ -9,10 +9,20 @@ module o-ran-sc-du-hello-world {
     "www.o-ran-sc.org";
   description
     "This module contains the O-RAN Software Community Distributed Unit
-     API description. This schema was created to support the
-     O-RAN-SC D-Release RSAC use case.
-     This standalone model is the absolute minimum and therefore
-     called 'hello-world'.
+     API description. This API data model describes Cell and Radio Resource
+     Management (RRM) parameters defined by 3GPP in the context
+     of the O-RAN Software Community E-Release and its
+     'Slice Resource Quota Provisioning and Assurance' use case.
+
+     The module is inspired by 3GPP TS 28.541 5G Network Resource Model (NRM).
+     The intent is to reduce the implementation efforts. It is not intended
+     to fragment the industry.
+
+     Due the reduction of the model in terms of scope and completeness this
+     module cannot and must not be used in production environments.
+     The main purpose is to show case the implemented functions by
+     O-RAN-SC O-DU project. The module name 'hello-world' highlights
+     this fact.
 
      Copyright 2021 the O-RAN Software Community.
 
@@ -28,6 +38,13 @@ module o-ran-sc-du-hello-world {
      See the License for the specific language governing permissions and
      limitations under the License.";
 
+  revision 2021-10-01 {
+    description
+      "Updates based on the RSAC use case descriptions of O-RAN-SC E-Release.";
+    reference
+      "https://jira.o-ran-sc.org/browse/OAM-229
+       https://wiki.o-ran-sc.org/download/attachments/35881433/RSY-2021.08.04-OSC-Slice_Discovery%20and%20Registration_v01.pptx?api=v2";
+  }
   revision 2021-04-08 {
     description
       "Updates based on the RSAC call 2021-04-08.";
