@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cabfe74_87d3b341",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-23T15:41:02Z",
+      "side": 1,
+      "message": "demx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-230)\n└─ $ ▶ pyang --version\npyang 2.5.0\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-230)\n└─ $ ▶ pyang --lint --lint-ensure-hyphenated-names o-ran-sc-du-hello-world.yang \no-ran-sc-du-hello-world.yang:511: warning: DISABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:515: warning: ENABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:529: warning: LOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:535: warning: UNLOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:541: warning: SHUTTING_DOWN is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:555: warning: IDLE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:559: warning: INACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:564: warning: ACTIVE is not hyphenated, e.g., using upper-case or underscore\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-230)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-230)\n└─ $ ▶ yanglint \n\u003e add o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-230)\n└─ $ ▶ ",
+      "revId": "0d990f6a8298d03fe6d57347317a7ce99a1a92bd",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
