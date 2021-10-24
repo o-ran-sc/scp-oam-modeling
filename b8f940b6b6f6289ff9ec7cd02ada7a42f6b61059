@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cfee8a5_e3502b06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-24T07:02:19Z",
+      "side": 1,
+      "message": "demx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-233)\n└─ $ ▶ pyang --version\npyang 2.5.0\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-233)\n└─ $ ▶ pyang --lint --lint-ensure-hyphenated-names o-ran-sc-du-hello-world.yang \no-ran-sc-du-hello-world.yang:527: warning: DISABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:531: warning: ENABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:545: warning: LOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:551: warning: UNLOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:557: warning: SHUTTING_DOWN is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:571: warning: IDLE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:575: warning: INACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:580: warning: ACTIVE is not hyphenated, e.g., using upper-case or underscore\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-233)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-233)\n└─ $ ▶ yanglint \n\u003e add /home/demx8as6/workspace/yang/standard/ietf/RFC/ietf-inet-types@2013-07-15.yang nts-common.yang o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-233)\n└─ $ ▶ ",
+      "revId": "b8f940b6b6f6289ff9ec7cd02ada7a42f6b61059",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
