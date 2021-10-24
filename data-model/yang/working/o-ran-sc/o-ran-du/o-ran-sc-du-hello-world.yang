@@ -3,16 +3,23 @@ module o-ran-sc-du-hello-world {
   namespace "urn:o-ran-sc:yang:o-ran-sc-du-hello-world";
   prefix duhw;
 
+  import nts-common {
+    prefix ntsc;
+  }
+
   organization
     "O-RAN Software Community";
   contact
     "www.o-ran-sc.org";
   description
     "This module contains the O-RAN Software Community Distributed Unit
-     API description. This API data model describes Cell and Radio Resource
-     Management (RRM) parameters defined by 3GPP in the context
-     of the O-RAN Software Community E-Release and its
-     'Slice Resource Quota Provisioning and Assurance' use case.
+     API description. This API data model describes ...
+     
+     * Cell and Radio Resource Management (RRM) parameters defined by 3GPP in7
+       the context of the O-RAN Software Community E-Release and its
+       'Slice Resource Quota Provisioning and Assurance' use case.
+
+     * VES Subscription parameters according to OPNFV and ONAP.
 
      The module is inspired by 3GPP TS 28.541 5G Network Resource Model (NRM).
      The intent is to reduce the implementation efforts. It is not intended
@@ -37,7 +44,16 @@ module o-ran-sc-du-hello-world {
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.";
+  reference 
+    "3GPP TS 28.541 5G Network Resource Model (NRM)
+     OPNFV VES - https://wiki.opnfv.org/display/ves";
 
+  revision 2021-10-20 {
+    description
+      "Subscription management added.";
+    reference
+      "https://jira.o-ran-sc.org/browse/OAM-233";
+  }
   revision 2021-10-02 {
     description
       "Updates based on the RSAC use case descriptions of O-RAN-SC E-Release.";
@@ -72,6 +88,12 @@ module o-ran-sc-du-hello-world {
        an O-RAN distributed function.";
     reference
       "O-RAN.WG1.O-RAN-Architecture-Description-v04.00 - 4.3.5 O-DU";
+  }
+
+  feature subscription-management {
+    description
+      "This feature indicates that the network-function implements
+       a subscription-function for sending notifications to a consumer.";
   }
 
   // Type definitions
@@ -251,8 +273,7 @@ module o-ran-sc-du-hello-world {
       enum prb {
         description
           "Physical Resource Block (PRB)
-           for a cell of a distributed unit
-           for both downlink and uplink.";
+           for a cell of a distributed unit.";
       }
       enum prb-ul {
         description
@@ -907,6 +928,16 @@ module o-ran-sc-du-hello-world {
       reference
         "3GPP TS 28.541";
       uses distributed-unit-function;
+    }
+    list subscription-streams {
+      if-feature "subscription-management";
+      key "id";
+      description
+        "The list represents all streams to a consumer. To subscribe for 
+         events an entry in this list should be created. To unsubscribe the
+         corresponding entry must be deleted.";
+      uses top-grp;
+      uses ntsc:ves-endpoint-g;
     }
     uses network-function-grp {
       status deprecated;
