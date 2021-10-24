@@ -21,6 +21,11 @@ module o-ran-sc-du-hello-world {
 
      * VES Subscription parameters according to OPNFV and ONAP.
 
+     * Performance Management parameters per Cell and for the measurement types
+       * average user-equipment throughput-downlink
+       * average user-equipment throughput uplink
+       as defined in 3GPP TS 28.552.
+
      The module is inspired by 3GPP TS 28.541 5G Network Resource Model (NRM).
      The intent is to reduce the implementation efforts. It is not intended
      to fragment the industry.
@@ -48,6 +53,13 @@ module o-ran-sc-du-hello-world {
     "3GPP TS 28.541 5G Network Resource Model (NRM)
      OPNFV VES - https://wiki.opnfv.org/display/ves";
 
+  revision 2021-10-20 {
+    description
+      "Performance management added.";
+    reference
+      "3GPP TS 28.552
+       https://jira.o-ran-sc.org/browse/OAM-232";
+  }
   revision 2021-10-20 {
     description
       "Subscription management added.";
@@ -94,6 +106,50 @@ module o-ran-sc-du-hello-world {
     description
       "This feature indicates that the network-function implements
        a subscription-function for sending notifications to a consumer.";
+  }
+
+  feature performance-measurement {
+    description
+      "This feature indicates that the network-function implements
+       a performance measurement function.";
+    reference
+      "3GPP TS 28.623
+       3GPP TS 28.622";
+  }
+
+  // Identities
+
+  identity performance-measurement-type-id {
+    description
+      "Base identity for performance measurement types. 
+       A unique identification of the measurement, not including the resource. 
+       Different resources can share measurement types.
+
+       A string-based qualifier can be used in addition to the
+       identity in order to have different measurement types based on
+       information not known at design-time.
+       Standards and vendors can define sub-identities to clearly
+       identify specific measurement types.
+
+       This identity is abstract and MUST NOT be used for measurements.";
+  }
+
+  identity user-equipment-average-throughput-downlink {
+    base performance-measurement-type-id;
+    description
+      "The identifier for a measurement value which indicates the average 
+       downlink-throughput for all user-equipment.";
+    reference
+      "3GPP TS 28.552";
+  }
+
+  identity user-equipment-average-throughput-uplink {
+    base performance-measurement-type-id;
+    description
+      "The identifier for a measurement value which indicates the average 
+       downlink-throughput for all user-equipment.";
+    reference
+      "3GPP TS 28.552";
   }
 
   // Type definitions
@@ -266,6 +322,19 @@ module o-ran-sc-du-hello-world {
        attribute, which has two possible values: disabled and enabled.";
     reference
       "3GPP TS 28.625 and ITU-T X.731 / ISO/IEC 10164-2";
+  }
+
+  typedef performance-measurement-type-id {
+    type identityref {
+      base performance-measurement-type-id;
+    }
+    description
+      "Identifies an performance-measurement type. The description of the 
+       performance-measurement type id MUST indicate if the it is abstract or 
+       not. An abstract performance-measurement type is used as a base for other 
+       performance-measurement type ids and will not be used as a value for a 
+       performance-measurement or be present in an 
+       performance-measurement dictionary/inventory.";
   }
 
   typedef resource-type {
@@ -619,6 +688,7 @@ module o-ran-sc-du-hello-world {
          line 215";
       uses top-grp;
       uses cell-grp;
+      uses measurement-grp;
     }
     list radio-resource-management-policy-ratio {
       key "id";
@@ -631,6 +701,20 @@ module o-ran-sc-du-hello-world {
       uses top-grp;
       uses radio-resource-management-policy-ratio-grp;
     }
+  }
+
+  grouping measurement-grp {
+    description
+      "An abstract object class for performance management. The object class
+       could be implemented by any kind of resource which can measure data
+       and expose the measured data for quality assurance.";
+    leaf-list supported-performance-measurement-type {
+      type performance-measurement-type-id;
+      config false;
+      description
+        "A list of measurement types which are supported by this 
+         network-function for each slice.";
+    }    
   }
 
   grouping network-function {
@@ -671,6 +755,68 @@ module o-ran-sc-du-hello-world {
       uses connection-grp {
         status deprecated;
       }
+    }
+  }
+
+  grouping performance-measurement-job-grp {
+    description
+      "An abstract object class representing a performance-measurement-job";
+    leaf job-tag {
+      type string {
+        length "255";
+      }
+      description
+        "A job group identifier to combine several performance-measurement-jobs
+         to one logical job.";
+    }
+    leaf-list performance-metrics {
+      type instance-identifier;
+      min-elements 1;
+      description
+        "Performance metrics (or performance measurement counter values)
+         include measurements defined in TS 28.552 and KPIs defined in TS 28.554
+         and enhanced by O-RAN working groups.
+         Performance metrics are identified with their xPath including their
+         identity.
+
+         Example: 
+         /network-function/distributed-unit-functions[id='<id-value>']/cell[id='<id-value']/supported-performance-measurement-type[.='user-equipment-average-throughput-downlink']";
+      reference
+        "3GPP TS 28.552
+         3GPP TS 28.554
+         O-RAN WG10 PM-Coordination-Team";
+    }
+    leaf granularity-period {
+      type uint32 {
+        range "1..max";
+      }
+      units "s";
+      mandatory true;
+      description
+        "The interval time in seconds between the start of a measurement and the
+         end of a measurement.
+         If the network-function does not support the intended 
+         granularity-period, then the network-function SHOULD use the supported
+         granularity-period which is lower than the configured/intended period.";
+      reference
+        "3GPP TS 28.552
+         3GPP TS 28.554
+         O-RAN WG10 PM-Coordination";
+    }
+    leaf-list object-reference {
+      type instance-identifier;
+      description
+        "A list of reference to objects, which SHOULD measure the referred
+         performance-metrics values.";
+    }
+    leaf stream-target {
+      if-feature subscription-management;
+      type leafref {
+        path "/network-function/subscription-streams/id";
+      }
+      mandatory true;
+      description
+        "A reference to the subscriber of the stream. ";
     }
   }
 
@@ -938,6 +1084,28 @@ module o-ran-sc-du-hello-world {
          corresponding entry must be deleted.";
       uses top-grp;
       uses ntsc:ves-endpoint-g;
+    }
+    list performance-measurement-jobs {
+      if-feature "performance-measurement";
+      key "id";
+      description
+        "This list represents a performance measurement jobs for this
+         network-function.
+         To activate the production of the specified performance measurement,
+         the SMO needs to create a performance-measurement-job instance.
+         To completely deactivate a running performance-measurement-job the
+         SMO deletes the corresponding the performance-measurement-job in
+         this list.
+         For temporary deactivation of the performance-measurement-job, the SMO
+         SHALL set the administrative state value to 'locked'. In this situation
+         the network-function must indicated that the
+         performance-measurement-job is not functional by setting the
+         operational-state to 'disabled'.
+         Once the administrative state value is set back to 'unlocked', the
+         performance-measurement-job SHOULD start is function again and indicate
+         this situation by setting the operational-state to 'enabled'.";
+      uses top-grp;
+      uses performance-measurement-job-grp;
     }
     uses network-function-grp {
       status deprecated;
