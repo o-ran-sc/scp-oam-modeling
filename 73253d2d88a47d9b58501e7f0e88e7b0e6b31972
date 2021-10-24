@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ba1d1e5_0365377c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-24T10:37:31Z",
+      "side": 1,
+      "message": "Yang Validation:\n\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ pyang --version\npyang 2.5.0\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ pyang --lint --lint-ensure-hyphenated-names o-ran-sc-du-hello-world.yang \no-ran-sc-du-hello-world.yang:602: warning: DISABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:606: warning: ENABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:620: warning: LOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:626: warning: UNLOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:632: warning: SHUTTING_DOWN is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:646: warning: IDLE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:650: warning: INACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:655: warning: ACTIVE is not hyphenated, e.g., using upper-case or underscore\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ pyang -p /home/demx8as6/workspace/yang/standard/ietf/RFC o-ran-sc-du-hello-world.yang \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ yanglint\n\u003e add /home/demx8as6/workspace/yang/standard/ietf/RFC/ietf-inet-types@2013-07-15.yang nts-common.yang o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/o-ran-du (OAM-232)\n└─ $ ▶ ",
+      "revId": "73253d2d88a47d9b58501e7f0e88e7b0e6b31972",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
