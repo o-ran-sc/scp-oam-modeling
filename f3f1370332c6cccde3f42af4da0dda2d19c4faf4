@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30a18ad1_1b1cbe32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-28T10:34:38Z",
+      "side": 1,
+      "message": "New data-node hierarchy added: NF -\u003e Cell -\u003e UE -\u003e Slice -\u003e PM\n\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ pyang --version\npyang 2.5.0\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ pyang --lint --lint-ensure-hyphenated-names -p /home/demx8as6/workspace/yang/standard/ietf/RFC o-ran-sc-du-hello-world.yang \no-ran-sc-du-hello-world.yang:602: warning: DISABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:606: warning: ENABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:620: warning: LOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:626: warning: UNLOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:632: warning: SHUTTING_DOWN is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:646: warning: IDLE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:650: warning: INACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:655: warning: ACTIVE is not hyphenated, e.g., using upper-case or underscore\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ pyang -f tree o-ran-sc-du-hello-world.yang | grep -A5 -B2 user-equipment\n     |  |  +--rw radio-resource-management-policy-min-ratio?         uint8\n     |  |  +--rw radio-resource-management-policy-dedicated-ratio?   uint8\n     |  +--ro user-equipment* [identifier]\n     |     +--ro identifier    uint32\n     |     +--ro slices* [slice-differentiator slice-service-type]\n     |        +--ro slice-differentiator                      uint32\n     |        +--ro slice-service-type                        uint8\n     |        +--ro supported-performance-measurement-type*   performance-measurement-type-id\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ yanglint \n\u003e add /home/demx8as6/workspace/yang/standard/ietf/RFC/ietf-inet-types@2013-07-15.yang nts-common.yang o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ ",
+      "revId": "f3f1370332c6cccde3f42af4da0dda2d19c4faf4",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
