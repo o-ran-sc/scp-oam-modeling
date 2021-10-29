@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d905fb35_f9a9bb2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-29T09:07:02Z",
+      "side": 1,
+      "message": "Just explanation examples in a description changed to reflect the changes by OAM-232.",
+      "revId": "ebd2c0627249a9e47d0afe9c73e7f67ee7d72e88",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
