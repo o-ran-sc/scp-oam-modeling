@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39b31818_7b04dcc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2021-10-29T08:57:13Z",
+      "side": 1,
+      "message": "Updates based on input by Dave\n\nPlease note that for E-Release we don\u0027t need the values of the measurements, because those are send by VES but we need a key to identify the measured value and its meaning. There the term \"supported-...\" is used.\n\nYANG validation:\n\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ pyang --version\npyang 2.5.0\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ pyang --lint --lint-ensure-hyphenated-names -p /home/demx8as6/workspace/yang/standard/ietf/RFC o-ran-sc-du-hello-world.yang \no-ran-sc-du-hello-world.yang:614: warning: DISABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:618: warning: ENABLED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:632: warning: LOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:638: warning: UNLOCKED is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:644: warning: SHUTTING_DOWN is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:658: warning: IDLE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:662: warning: INACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:667: warning: ACTIVE is not hyphenated, e.g., using upper-case or underscore\no-ran-sc-du-hello-world.yang:830: error: keyword \"key\" not in canonical order (see RFC 7950, Section 14)\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ yanglint --version\nyanglint 2.0.97\ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶ yanglint\n\u003e add /home/demx8as6/workspace/yang/standard/ietf/RFC/ietf-inet-types@2013-07-15.yang nts-common.yang o-ran-sc-du-hello-world.yang \n\u003e \ndemx8as6 @ martindev ~/workspace/o-ran-sc/review/modeling/data-model/yang/working/o-ran-sc/o-ran-du (review/martin_skorupski/OAM-232)\n└─ $ ▶   ",
+      "revId": "3263e08a23ec5e31b652a4443adcf78b5fd9a33a",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
