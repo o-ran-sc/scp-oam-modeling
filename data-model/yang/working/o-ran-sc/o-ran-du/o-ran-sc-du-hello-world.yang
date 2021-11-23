@@ -53,6 +53,12 @@ module o-ran-sc-du-hello-world {
     "3GPP TS 28.541 5G Network Resource Model (NRM)
      OPNFV VES - https://wiki.opnfv.org/display/ves";
 
+  revision 2021-11-23 {
+    description
+      "Bug fixes.";
+    reference
+      "https://jira.o-ran-sc.org/browse/OAM-237";
+  }
   revision 2021-10-29 {
     description
       "Performance management added.";
@@ -278,7 +284,7 @@ module o-ran-sc-du-hello-world {
 
   typedef mobile-country-code-type {
     type string {
-      pattern '^[02-79][0-9][0-9]$';
+      pattern '[02-79][0-9][0-9]';
     }
     description
       "The mobile country code consists of three decimal digits,
@@ -290,7 +296,7 @@ module o-ran-sc-du-hello-world {
 
   typedef mobile-network-code-type {
     type string {
-      pattern '^[0-9]{2,3}$';
+      pattern '[0-9]{2,3}';
     }
     description
       "The mobile network code consists of two or three
@@ -760,14 +766,16 @@ module o-ran-sc-du-hello-world {
       "An abstract object class representing a performance-measurement-job";
     leaf job-tag {
       type string {
-        length "255";
+        length "1..255";
       }
       description
         "A job group identifier to combine several performance-measurement-jobs
          to one logical job.";
     }
     leaf-list performance-metrics {
-      type instance-identifier;
+      type instance-identifier {
+        require-instance false;
+      }
       min-elements 1;
       description
         "Performance metrics (or performance measurement counter values)
@@ -826,8 +834,8 @@ module o-ran-sc-du-hello-world {
        performance measurements. Such grouping should be used by the monitoring 
        object.";
     list supported-measurements {
-      config false;
       key "performance-measurement-type";
+      config false;
       uses supported-measurement-grp;
       description
         "A list of performance measurements object providing the 
@@ -1162,8 +1170,9 @@ module o-ran-sc-du-hello-world {
       "An action to establish the connection to a remote network function.";
     input {
       leaf remote-network-function {
-        type o-ru-reference;
+        type o-ru-reference;        
         mandatory true;
+        status obsolete;
         description
           "An reference to a remote network function - an O-RU - to which
            a connection should be established.";
@@ -1180,8 +1189,9 @@ module o-ran-sc-du-hello-world {
       "An action to destroy the connection to a remote network function.";
     input {
       leaf remote-network-function {
-        type o-ru-reference;
+        type o-ru-reference;        
         mandatory true;
+        status obsolete;
         description
           "An reference to a remote network function - an O-RU - to which
            the connection should be destroyed.";
