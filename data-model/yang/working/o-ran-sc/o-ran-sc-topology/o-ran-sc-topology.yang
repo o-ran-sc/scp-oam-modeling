@@ -18,7 +18,7 @@ module o-ran-sc-topology {
   contact
     "www.o-ran.org";
   description
-    "This module contains YANG definitions for the O-RAN Topology augmentation 
+    "This module contains YANG definitions for the O-RAN Topology augmentation
      of TAPI Topology.
 
      Copyright 2022 the O-RAN Software Community.
@@ -96,18 +96,19 @@ module o-ran-sc-topology {
       "Augments the TAPI Topology node Context with the (network) function type";
     leaf function {
       type identityref {
-        base osctc:function-type  ;
+        base osctc:function-type;
       }
       description
         "The type of the (Network) Function.";
     }
   }
+
   augment "/tapi-common:context/tapi-topology:topology-context/tapi-topology:topology/tapi-topology:node/tapi-topology:owned-node-edge-point" {
     description
       "Augments the TAPI Topology Owned Node Edge Points with the (network) function type";
     leaf function {
       type identityref {
-        base osctc:interface-type  ;
+        base osctc:interface-type;
       }
       description
         "The type of the Node Edge Point interface type.";
