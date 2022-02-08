@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02929e6_db1221a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2022-02-08T13:49:49Z",
+      "side": 1,
+      "message": "validated using pyang --lint and yanglint",
+      "revId": "ba6e78b3af189dd56247bd8f17fb13a973bc5fdf",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
