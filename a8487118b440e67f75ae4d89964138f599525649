@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06bd917d_170dd9f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2022-02-23T09:25:39Z",
+      "side": 1,
+      "message": "changes on yang are validated with pyang --lint and yanglint",
+      "revId": "a8487118b440e67f75ae4d89964138f599525649",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
