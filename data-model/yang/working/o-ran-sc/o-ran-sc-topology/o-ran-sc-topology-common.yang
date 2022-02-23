@@ -7,6 +7,10 @@ module o-ran-sc-topology-common {
     prefix if;
   }
 
+  import tapi-common {
+    prefix tapi-common;
+  }
+
   organization
     "O-RAN Software Community";
   contact
@@ -58,6 +62,12 @@ module o-ran-sc-topology-common {
     description
       "An identity corresponding to an
        O-RAN Service Management and Orchestration Function (SMO).";
+  }
+
+  identity o-cloud {
+    base function-type;
+    description
+      "An identity corresponding to an O-RAN Cloud component (O-Cloud).";
   }
 
   identity non-rt-ric {
@@ -243,4 +253,64 @@ module o-ran-sc-topology-common {
     description
       "An identity for a yang based management interface for transport nodes.";
   }
+
+  // O-RAN-SC LAYER_PROTOCOL_QUALIFIER
+  identity LAYER_PROTOCOL_QUALIFIER {
+    base tapi-common:LAYER_PROTOCOL_QUALIFIER;
+    description
+      "Base identity for layer protocol qualifiers used in RAN, Transport and Core.
+       A unique identification of layer protocol qualifiers. 
+       Typically the layer protocol qualifier is used to identify the interface 
+       protocol, like VES or NETCONF. 
+       This identity is abstract and MUST NOT be used as a value.";
+  }
+
+  identity unknown {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for an unknown qualifier.";
+  }
+  
+  identity file {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for a FILE transfer protocol qualifier.";
+  }
+
+  identity grpc {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for an generic remote procedure call (gRPC) protocol qualifier.";
+  }
+
+  identity netconf {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for a NETCONF protocol qualifier.";
+  }
+
+  identity rest {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for a REST protocol qualifier.";
+  }
+
+  identity restconf {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for a RESTCONF protocol qualifier.";
+  }
+
+  identity ves {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for an REST based event stream (VES) protocol qualifier.";
+  }
+
+  identity ofh {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for an O-RAN Fronthaul based protocol qualifier.";
+  }
+
 }
