@@ -32,6 +32,12 @@ module o-ran-sc-topology-common {
      See the License for the specific language governing permissions and
      limitations under the License.";
 
+  revision 2022-05-26 {
+    description
+      "SCTP protocol added for E2 interfaces";
+    reference
+      "O-RAN-SC: https://jira.o-ran-sc.org/browse/OAM-269";
+  }
   revision 2022-03-06 {
     description
       "Initial revision";
@@ -367,5 +373,15 @@ module o-ran-sc-topology-common {
     base LAYER_PROTOCOL_QUALIFIER;
     description
       "An identity for an O-RAN Fronthaul based protocol qualifier.";
+  }
+
+  identity sctp {
+    base LAYER_PROTOCOL_QUALIFIER;
+    description
+      "An identity for an Stream Control Transmission Protocol (SCTP)  based
+       protocol qualifier.";
+    reference
+      "RFC 8261,
+       RFC 4960";
   }
 }
