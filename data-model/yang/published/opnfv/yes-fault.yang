@@ -1,0 +1,224 @@
+module yes-fault {
+    yang-version 1.1;
+    namespace "urn:opnfv:params:xml:ns:yang:yes-fault";
+    prefix yf;
+
+    import yang-based-event-stream {
+        prefix yes;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import yes-types {
+        prefix yt;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import ietf-alarms {
+        prefix al;
+        reference
+          "RFC 8632: A YANG Data Model for Alarm Management";
+    }
+
+    organization
+      "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+    contact
+      "wiki.opnfv.org/display/ves";
+    description
+      "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+       describe the exchanged data format.
+
+       Copyright 2020 highstreet technologies GmbH and others.
+
+       Licensed under the Apache License, Version 2.0 (the 'License');
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an 'AS IS' BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.";
+
+    revision 2020-06-28 {
+        description
+          "Initial version";
+        reference
+          "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+           VES: wiki.opnfv.org/display/ves/VES+Home
+                docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+           YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    /*
+     * Identities
+     */
+    identity fault {
+        base yt:domain-id;
+        description
+          "Indicates, that the event body contains fault(s) related asynchronous
+           message context.";
+    }
+
+    identity category-id {
+        description
+          "Base identity for the alarm category.  A unique identification of the
+           alarm category.
+
+           This identity is abstract and MUST NOT be used for alarm categories.";
+    }
+
+    identity license {
+        base category-id;
+        description
+          "The alarm is related to a license.";
+    }
+
+    identity hardware {
+        base category-id;
+        description
+          "The alarm is related to hardware.";
+    }
+
+    identity link {
+        base category-id;
+        description
+          "The alarm is related to telecommunication and/or infrastructure
+           link.";
+    }
+
+    identity routing {
+        base category-id;
+        description
+          "The alarm is related to packet routing.";
+    }
+
+    identity security {
+        base category-id;
+        description
+          "The alarm is related to security.";
+    }
+    identity signaling {
+        base category-id;
+        description
+          "The alarm is related to network signaling.";
+    }
+
+    /*
+     * Type definitions
+     */
+    typedef category-id {
+        type identityref {
+            base category-id;
+        }
+        description
+          "Identifies an alarm category. The description of the alarm category
+           identifier MUST indicate if the alarm category identifier is abstract
+           or not.
+           An abstract alarm category identifier is used as a base for other
+           alarm category ids and will not be used as a value for a category or
+           be present in the fault event.";
+    }
+
+    /*
+     * Groupings
+     */
+    grouping fault-grp {
+        leaf condition {
+            type string {
+                length "255";
+            }
+            mandatory true;
+            description
+              "The alarm condition reported by the network function.";
+        }
+        leaf interface {
+            type al:resource;
+            description
+              "The card, port, channel or interface name of the network function
+               generating the alarm:
+
+               TODO: Shouldn't this leaf be mandatory for alarm correlation?";
+        }
+        leaf category {
+            type category-id;
+            description
+              "Event category, for example: license, link, routing, security,
+               signaling.";
+        }
+        leaf severity {
+            type al:severity-with-clear;
+            mandatory true;
+            description
+              "The event severity.";
+        }
+        leaf source-type {
+            type string {
+                length "255";
+            }
+            mandatory true;
+            description
+              "Type of event source; examples: card, host, other, port,
+               portThreshold, router, slotThreshold, switch, virtualMachine,
+               virtualNetworkFunction.
+
+               TODO: Is this needed? or What is the difference to category?";
+        }
+        leaf specific-problem {
+            type string {
+                length "255";
+            }
+            description
+              "A short description of the alarm or problem.";
+        }
+        leaf network-function-status {
+            type enumeration {
+                enum enabled {
+                    description
+                      "The network function is operational.";
+                }
+                enum disabled {
+                    description
+                      "The network function is not operational.";
+                }
+            }
+            description
+              "The operational status of the network function.";
+        }
+        description
+          "An object class containing all fault specific parameters.";
+    }
+
+    /*
+     * Augmentation of YES
+     */
+    augment "/yes:event-history/yes:event" {
+        when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'yf:fault')" {
+            description
+              "The event header must indicate 'fault'.";
+        }
+        if-feature yes:event-history;
+        list fault {
+            uses fault-grp;
+            description
+              "A list for fault objects.";
+        }
+        description
+          "Adds to YES the specifics of fault notifications.";
+    }
+
+    augment "/yes:yang-based-event-stream/yes:event" {
+        when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'yf:fault')" {
+            description
+              "The event header must indicate 'fault'.";
+        }
+        list fault {
+            uses fault-grp;
+            description
+              "A list for fault objects.";
+        }
+        description
+          "Adds to YES the specifics of fault notifications.";
+    }
+}
