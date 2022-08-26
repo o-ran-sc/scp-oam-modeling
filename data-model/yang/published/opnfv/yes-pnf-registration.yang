@@ -1,0 +1,182 @@
+module yes-pnf-registration {
+    yang-version 1.1;
+    namespace "urn:opnfv:params:xml:ns:yang:yes-pnf-registration";
+    prefix ypr;
+
+    import yang-based-event-stream {
+        prefix yes;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import yes-types {
+        prefix yt;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import ietf-inet-types {
+        prefix inet;
+        reference
+          "RFC 6991: YANG data types for Internet addresses and related
+           things.";
+    }
+    import ietf-yang-types {
+        prefix yang;
+        reference
+          "RFC 6991: Common YANG Data Types.";
+    }
+
+    organization
+      "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+    contact
+      "wiki.opnfv.org/display/ves";
+    description
+      "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+       describe the exchanged data format.
+       The module yes-pnf-registration is only required, if the network function
+       does not support NETCONF CALL HOME but RESTCONF asynchronous messages.
+
+       Copyright 2020 highstreet technologies GmbH and others.
+
+       Licensed under the Apache License, Version 2.0 (the 'License');
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an 'AS IS' BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.";
+
+    revision 2020-06-28 {
+        description
+          "Initial version";
+        reference
+          "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+           VES: wiki.opnfv.org/display/ves/VES+Home
+                docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+           YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    /*
+     * Identities
+     */
+    identity pnf-registration {
+        base yt:domain-id;
+        description
+          "Indicates, that the event body contains pnf-registration asynchronous
+           message context.";
+    }
+
+    /*
+     * Groupings
+     */
+    grouping pnf-registration-grp {
+        // TODO align with ietf-hardware, ONAP AAI, ONF manufactured-thing
+        leaf last-service-date {
+            type yang:date-and-time;
+            description
+              "Date when the field operation stuff way on-side.";
+        }
+        leaf mac-address {
+            type yang:mac-address;
+            description
+              "The MAC address of OAM interface of the network function.";
+        }
+        leaf manufacture-date {
+            type yang:date-and-time;
+            description
+              "Manufacture date of the network function.";
+        }
+        leaf model-number {
+            type string {
+                length "255";
+            }
+            description
+              "Version of the network function from vendor.";
+        }
+        leaf oam-host {
+            type inet:host;
+            description
+              "The m-plane fully qualified domain name (host) or IP address to
+               be used by the manager to contact the PNF.";
+        }
+        leaf oam-port {
+            type inet:port-number;
+            description
+              "The port number the PNF listens for OAM commands..";
+        }
+        leaf serial-number {
+            type string {
+                length "255";
+            }
+            description
+              "The serial number of the network function.";
+        }
+        leaf software-version {
+            type string {
+                length "255";
+            }
+            description
+              "The active software version running on the network function.";
+        }
+        leaf family {
+            type string {
+                length "255";
+            }
+            description
+              "The general type of hardware.";
+        }
+        leaf network-function-type {
+            type string {
+                length "255";
+            }
+            description
+              "Vendor name for the network function";
+        }
+        leaf vendor-name {
+            type string {
+                length "255";
+            }
+            description
+              "The company name of manufacturer.";
+        }
+        description
+          "An object class containing pnf-registration specific parameters.";
+    }
+
+    /*
+     * Augmentation of YES
+     */
+    augment "/yes:event-history/yes:event" {
+        when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'ypr:pnf-registration')" {
+            description
+              "The event header must indicate 'pnf-registration'.";
+        }
+        if-feature yes:event-history;
+        container pnf-registration {
+            uses pnf-registration-grp;
+            description
+              "A single object for specific parameters, used for the registration of
+               physical network functions (PNF).";
+        }
+        description
+          "Adds to YES the specifics of pnf-registration notifications.";
+    }
+
+    augment "/yes:yang-based-event-stream/yes:event" {
+        when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'ypr:pnf-registration')" {
+            description
+              "The event header must indicate 'pnf-registration'.";
+        }
+        container pnf-registration {
+            uses pnf-registration-grp;
+            description
+              "A single object for specific parameters, used for the registration of
+               physical network functions (PNF).";
+        }
+        description
+          "Adds to YES the specifics of pnf-registration notifications.";
+    }
+}
