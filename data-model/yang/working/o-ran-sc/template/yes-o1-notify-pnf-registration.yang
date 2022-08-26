@@ -1,0 +1,307 @@
+module yes-o1-notify-pnf-registration {
+  yang-version 1.1;
+  namespace "urn:o-ran-sc:params:xml:ns:yang:yes-o1-notify-pnf-registration";
+  prefix ypr;
+
+  import yang-based-event-stream {
+    prefix yes;
+    reference
+      "wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+  import yes-types {
+    prefix yt;
+    reference
+      "wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+  import ietf-inet-types {
+    prefix inet;
+    reference
+      "RFC 6991: YANG data types for Internet addresses and related
+       things.";
+  }
+  import ietf-yang-types {
+    prefix yang;
+    reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+
+  organization
+    "O-RAN Software Community";
+  contact
+    "www.o-ran-sc.org";
+  description
+    "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+     describe the exchanged data format.
+     The module yes-o1-notify-pnf-registration is only required, if the
+     network function does not support NETCONF CALL HOME but RESTCONF
+     asynchronous messages.
+
+     Copyright 2022 highstreet technologies GmbH and others.
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2022-08-24 {
+    description
+      "Initial version";
+    reference
+      "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+       VES: wiki.opnfv.org/display/ves/VES+Home
+            docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+       YES: wiki.opnfv.org/display/ves/VES+goes+YES
+       O-RAN Operations and Maintenance Interface Specification (O-RAN.WG10.O1-Interface.0-v07.00)
+             section 2.7.2.4 Operations and Notifications";
+  }
+
+  /*
+   * Identities
+   */
+
+  identity o1-notify-pnf-registration {
+    base yt:domain-id;
+    description
+      "Indicates, that the event body contains o1-notify-nf-registration
+       asynchron message context.";
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping o1-notify-pnf-registration-grp {
+    // TODO align with ietf-hardware, ONAP AAI, ONF manufactured-thing
+    // Parameter Name	S	Information Type	Comment
+    // objectClass	M	ManagedEntity.objectClass 	Class of the managed object, registering for service.
+    leaf object-class {
+      type string {
+        length "3..255";
+      }
+      mandatory true;
+      description
+        "The name of the object class describing a PNF in the context of
+         PNF registration. ";
+    }
+    // objectInstance	M	ManagedEntity.objectInstance
+    // 	Instance of the managed object, registering for service.
+    leaf object-instance {
+      type yt:resource;
+      mandatory true;
+      description
+        "Reference to the object representing the PNF.";
+    }
+    // notificationId	M	NotificationId	Notification identifier as defined in ITU-T Rec. X. 733
+    leaf notification-identifier {
+      type uint64;
+      mandatory true;
+      description
+        "An notification identifier of this event as defined in ITU-T Rec. X.733.";
+      reference
+        "ITU-T Rec. X.733 - section 8.1.2.8.";
+    }
+    // notificationType	M	"o1notifyPnfRegistration"
+    leaf notification-type {
+      type yt:domain-id;
+      mandatory true;
+      description
+        "Only the domain identity 'o1-notify-pnf-registration' is allowed.";
+    }
+    // eventTime	M	DateTime	Time when the NF is sending the registration.
+    leaf event-time {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The earliest time aka epoch time associated with the event from
+         any component.";
+    }
+    // systemDN	M	SystemDN	DN of the MnS provider of the notification
+    leaf system-distinguished-name {
+      type string;
+      mandatory true;
+      description
+        "Distinguished Name of the management service provider of the notification";
+    }
+    // o1SpecVersion	M	number	Version of the O1 Specification defining the format of this PNF registration notification
+    leaf o1-specification-version {
+      type string {
+        length "1..5";
+      }
+      mandatory true;
+      description
+        "The version of the O1 Specification defining the format of this PNF registration notification";
+    }
+    // serialNumber	M	string	3GPP TS 28.632 [43] serialNumber = serial number of the unit
+    leaf serial-number {
+      type string {
+        length "3..255";
+      }
+      mandatory true;
+      description
+        "The serial number of the network function.";
+      reference
+        "3GPP TS 28.632 serialNumber";
+    }
+    // vendorName	M	string	3GPP TS 28.632 [43] vendorName = name of the NF vendor.
+    choice vendor {
+      case vendor-private-enterprise-number {
+        leaf vendor-pen {
+          type uint32;
+          description
+            "Network function vendor IANA private enterprise number.";
+        }
+      }
+      case name {
+        leaf vendor-name {
+          type string;
+          description
+            "Network function vendor name according to IANA Private Enterprise Numbers";
+        }
+      }
+      description
+        "The network function vendor can be identified by its name or by its
+         IANA private enterprise number (PEN)";
+      reference
+        "IANA Private Enterprise Numbers
+          http://www.iana.org/assignments/enterprise-numbers/enterprise-numbers";
+      // leaf vendor-name {
+      //   type string {
+      //       length "1..255";
+      //   }
+      //   mandatory true;
+      //   description
+      //     "The company name of manufacturer.";
+      //   reference
+      //     "3GPP TS 28.632 vendorName";
+    }
+    // oamV4IpAddress	CM	string	IPv4 m-plane IP address to be used by the manager to contact the NF.
+    // oamV6IpAddress	CM	string	IPv6 m-plane IP address to be used by the manager to contact the NF.
+    leaf oam-host {
+      type inet:host;
+      mandatory true;
+      description
+        "The m-plane fully qualified domain name (host) or IP address to
+         be used by the manager to contact the PNF.";
+      reference
+        "O-RAN Operations and Maintenance Interface Specification (O-RAN.WG10.O1-Interface.0-v07.00)
+           section 2.7.2.4 Operations and Notifications - oamV4IpAddress and oamV6IpAddress";
+    }
+    leaf oam-port {
+      type inet:port-number;
+      default "830";
+      description
+        "The port number the PNF listens for OAM commands..";
+    }
+    // macAddress	O	string	MAC address of the OAM of the unit
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The MAC address of OAM interface of the network function.";
+    }
+    // unitFamily	O	string	3GPP TS 28.632 [43] vendorUnitFamilyType = general type of HW unit
+    leaf unit-family {
+      type string {
+        length "1..255";
+      }
+      description
+        "The general type of hardware.";
+      reference
+        "3GPP TS 28.632 vendorUnitFamilyType";
+    }
+    // unitType	O	string	3GPP TS 28.632 [43] vendorUnitTypeNumber = vendor name for the unit
+    leaf unit-type {
+      type string {
+        length "1..255";
+      }
+      description
+        "Vendor name for the network function";
+      reference
+        "3GPP TS 28.632 vendorUnitTypeNumber";
+    }
+    // modelNumber	O	string	3GPP TS 28.632 [43] versionNumber = version of the unit from the vendor
+    leaf model-number {
+      type string {
+        length "1..255";
+      }
+      description
+        "Version of the network function from the vendor.";
+      reference
+        "3GPP TS 28.632 versionNumber";
+    }
+    // softwareVersion	O	string	3GPP TS 28.632 [43] swName = software release name.  This is the software provided by the vendor at onboarding to be run on this version of the NF and can contain multiple underlying software images.
+    leaf software-version {
+      type string {
+        length "1..255";
+      }
+      description
+        "The active software version running on the network function.";
+      reference
+        "3GPP TS 28.632 swName";
+    }
+    // restartReason	O	string	Reason the NF restarted, if known
+    leaf restart-reason {
+      type string {
+        length "1..255";
+      }
+      description
+        "The reason the network function restarted.";
+    }
+    // manufactureDate	O	string	3GPP TS 28.632 [43] dateOfManufacture = manufacture date of the unit in ISO 8601 format; e.g.,2016-04-23
+    leaf manufacture-date {
+      type yang:date-and-time;
+      description
+        "Manufacture date of the network function.";
+    }
+    // lastServiceDate	O	string	3GPP TS 28.632 [43] dateOfLastService = date of last service in ISO 8601 format; e.g., 2017-02-15
+    leaf last-service-date {
+      type yang:date-and-time;
+      description
+        "Date when the field operation stuff way on-side.";
+    }
+    // additionalFields	O	hashMap	Additional registration fields if needed, provided as key-value pairs.
+    description
+      "An object class containing o1-notify-pnf-registration specific parameters.";
+  }
+
+  /*
+   * Augmentation of YES
+   */
+
+  augment "/yes:event-history/yes:event" {
+    when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'ypr:o1-notify-pnf-registration')" {
+      description
+        "The event header must indicate 'o1-notify-pnf-registration'.";
+    }
+    if-feature "yes:event-history";
+    container o1-notify-pnf-registration {
+      uses o1-notify-pnf-registration-grp;
+      description
+        "A single object for specific parameters, used for the registration of
+         physical network functions (PNF).";
+    }
+    description
+      "Adds to YES the specifics of o1-notify-pnf-registration notifications.";
+  }
+
+  augment "/yes:yang-based-event-stream/yes:event" {
+    when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'ypr:o1-notify-pnf-registration')" {
+      description
+        "The event header must indicate 'o1-notify-pnf-registration'.";
+    }
+    container o1-notify-pnf-registration {
+      uses o1-notify-pnf-registration-grp;
+      description
+        "A single object for specific parameters, used for the registration of
+         physical network functions (PNF).";
+    }
+    description
+      "Adds to YES the specifics of o1-notify-pnf-registration notifications.";
+  }
+}
