@@ -1,0 +1,244 @@
+module yang-based-event-stream {
+  yang-version 1.1;
+  namespace "urn:opnfv:params:xml:ns:yang:yang-based-event-stream";
+  prefix yes;
+
+  import yes-types {
+    prefix yt;
+    reference
+      "wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+  import ietf-yang-types {
+    prefix yang;
+    reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+
+  organization
+    "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+  contact
+    "wiki.opnfv.org/display/ves";
+  description
+    "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+     describe the exchanged data format.
+
+     Copyright 2020 highstreet technologies GmbH and others.
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2020-06-28 {
+    description
+      "Initial version";
+    reference
+      "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+       VES: wiki.opnfv.org/display/ves/VES+Home
+            docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+       YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+
+  /*
+   * Feature
+   */
+
+  feature event-history {
+    description
+      "This feature means that the server supports local
+        storage (memory, flash, or disk) of send event
+        messages.";
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping header-grp {
+    leaf domain {
+      type yt:domain-id;
+      mandatory true;
+      description
+        "The eventing domain associated with the event";
+    }
+    leaf event-id {
+      type string {
+        length "1..255";
+      }
+      mandatory true;
+      description
+        "The event key that is unique to the event source.";
+    }
+    leaf event-name {
+      type string;
+      mandatory true;
+      description
+        "A unique event name. A names space ensures the uniqueness
+         between the data-models.";
+    }
+    leaf event-type {
+      type yt:event-type-id;
+      description
+        "Copy from VES description
+         'for example - applicationNf, guestOS, hostOS, platform.'
+
+         TODO: Open! How should this field by used and what is the
+         difference to 'yes:domain'? From the VES description it looks,
+         more like a VNF type than an event-type.";
+    }
+    leaf last-epoch {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The latest time aka epoch time associated with the event from any component.";
+    }
+    leaf nfc-naming-code {
+      type string {
+        length "3";
+      }
+      description
+        "The network function component type, aligned with vfc naming
+         standards.
+
+         TODO: Add a reference to the VFC naming standard.";
+    }
+    leaf nf-naming-code {
+      type string {
+        length "4";
+      }
+      description
+        "The network function type, aligned with network-function (NF)
+         naming standards.
+
+         TODO: Add a reference to the NF naming standard.";
+    }
+    choice nf-vendor {
+      case nf-vendor-private-enterprise-number {
+        leaf nf-vendor-pen {
+          type uint32;
+          description
+            "Network function vendor IANA private enterprise number.";
+        }
+      }
+      case name {
+        leaf nf-vendor-name {
+          type string;
+          description
+            "Network function vendor name according to IANA Private Enterprise Numbers";
+        }
+      }
+      description
+        "The network function vendor can be identified by its name or by its
+         IANA private enterprise number (PEN)";
+      reference
+        "IANA Private Enterprise Numbers
+          http://www.iana.org/assignments/enterprise-numbers/enterprise-numbers";
+    }
+    leaf priority {
+      type yt:priority;
+      mandatory true;
+      description
+        "The event priority to control the processing of the event.";
+    }
+    leaf reporting-entity-id {
+      type yang:uuid;
+      description
+        "The entity reporting the event, for example an OAM VM.";
+    }
+    leaf reporting-entity-name {
+      type string {
+        length "1..255";
+      }
+      mandatory true;
+      description
+        "The name of the entity reporting the event, for example, an EMS
+         name; may be the same as 'source-name'.";
+    }
+    leaf sequence {
+      type uint64;
+      mandatory true;
+      description
+        "Ordering of events communicated by an event source instance or 0, if not needed.";
+    }
+    leaf source-id {
+      type yang:uuid;
+      description
+        "UUID identifying the entity experiencing the event issue.";
+    }
+    leaf source-name {
+      type string;
+      mandatory true;
+      description
+        "The name of the entity experiencing the event issue,";
+    }
+    leaf start-epoch {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "The earliest time aka epoch time associated with the event from
+         any component.";
+    }
+    description
+      "An object class containing common parameters to all types of
+       events.";
+  }
+
+  grouping event-grp {
+    container header {
+      uses header-grp;
+      description
+        "This contains all the parameters which are common to all
+         events.";
+    }
+    description
+      "An object class defining the data structure of a single
+       event. An event is an asynchronous message send from the system to its
+       manager.";
+  }
+
+  /*
+   * Data
+   */
+
+  container event-history {
+    if-feature "event-history";
+    config false;
+    leaf maximum-number-of-entries {
+      type uint16 {
+        range "10..max";
+      }
+      default "255";
+      description
+        "The maximum number of item in the event list supported by
+         the server.";
+    }
+    list event {
+      description
+        "This contains the set of asynchronous messages.";
+      uses event-grp;
+    }
+    description
+      "The root container of an event log. ";
+  }
+
+  /*
+   * Notifications
+   */
+
+  notification yang-based-event-stream {
+    description
+      "This notification contains list of events.";
+    list event {
+      description
+        "This contains the set of asynchronous messages.";
+      uses event-grp;
+    }
+  }
+}
