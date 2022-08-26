@@ -1,0 +1,113 @@
+module yes-heartbeat {
+    yang-version 1.1;
+    namespace "urn:opnfv:params:xml:ns:yang:yes-heartbeat";
+    prefix yh;
+
+    import yang-based-event-stream {
+        prefix yes;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import yes-types {
+        prefix yt;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    organization
+      "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+    contact
+      "wiki.opnfv.org/display/ves";
+    description
+      "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+       describe the exchanged data format.
+       The module yes-heartbeat is only required, if the network function sends
+       HTTP-POST RESTCONF messages to the SMO, otherwise the native NETCONF
+       capabilities will be sufficient.
+
+       Copyright 2020 highstreet technologies GmbH and others.
+
+       Licensed under the Apache License, Version 2.0 (the 'License');
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an 'AS IS' BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.";
+
+    revision 2020-06-28 {
+        description
+          "Initial version";
+        reference
+          "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+           VES: wiki.opnfv.org/display/ves/VES+Home
+                docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+           YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    /*
+     * Identities
+     */
+    identity heartbeat {
+        base yt:domain-id;
+        description
+          "Indicates, that the event body contains heartbeat asynchronous
+           message context.";
+    }
+
+    /*
+     * Groupings
+     */
+    grouping heartbeat-grp {
+        leaf interval {
+            type uint32 {
+                range "60 .. 84600";
+            }
+            units "s";
+            mandatory true;
+            description
+              "The current heartbeat interval in seconds. The minimal heartbeat
+               interval is 1 minute avoiding overloading the management plane
+               network. The maximal interval is 24h to ensure a daily
+               heartbeat.";
+        }
+        description
+          "An object class containing heartbeat specific parameters.";
+    }
+
+    /*
+     * Augmentation of YES
+     */
+    augment "/yes:event-history/yes:event" {
+        when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'yh:heartbeat')" {
+            description
+              "The event header must indicate 'heartbeat'.";
+        }
+        if-feature yes:event-history;
+        container heartbeat {
+            uses heartbeat-grp;
+            description
+              "A single object for heartbeat specific parameters.";
+        }
+        description
+          "Adds to YES the specifics of heartbeat notifications.";
+    }
+
+    augment "/yes:yang-based-event-stream/yes:event" {
+        when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'yh:heartbeat')" {
+            description
+              "The event header must indicate 'heartbeat'.";
+        }
+        container heartbeat {
+            uses heartbeat-grp;
+            description
+              "A single object for heartbeat specific parameters.";
+        }
+        description
+          "Adds to YES the specifics of heartbeat notifications.";
+    }
+}
