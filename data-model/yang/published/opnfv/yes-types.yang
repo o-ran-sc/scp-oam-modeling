@@ -1,0 +1,326 @@
+module yes-types {
+  yang-version 1.1;
+  namespace "urn:opnfv:params:xml:ns:yang:yes-types";
+  prefix yt;
+
+  import ietf-yang-types {
+    prefix yang;
+    reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+
+  organization
+    "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+  contact
+    "wiki.opnfv.org/display/ves";
+  description
+    "This module contains common type definitions and groupings of the
+     yang-based-event-stream (YES). Such definitions could be used also outside of
+     YES if appropriate.
+
+     Copyright 2020 highstreet technologies GmbH and others.
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2020-06-28 {
+    description
+      "Initial version";
+    reference
+      "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+       VES: wiki.opnfv.org/display/ves/VES+Home
+            docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+       YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+
+  /*
+   * Identities
+   */
+
+  identity domain-id {
+    description
+      "Base identity for the event domain.  A unique identification of the
+       event domain.
+
+       This identity is abstract and MUST NOT be used for domains.";
+  }
+
+  identity event-type-id {
+    description
+      "Base identity for the event type.  A unique identification of the
+       event type.
+
+       This identity is abstract and MUST NOT be used for event types.";
+  }
+
+  identity application {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by a software application.";
+    reference
+      "https://en.wikipedia.org/wiki/Application_software";
+  }
+
+  identity micro-service {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by a software micro-service.";
+    reference
+      "https://en.wikipedia.org/wiki/Microservices";
+  }
+
+  identity guest-operating-system {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by the operating system of a
+       guest virtual network function.";
+  }
+
+  identity host-operating-system {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by the operating system of a
+       host system running virtual network functions.";
+  }
+
+  identity platform {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by the cloud and/or data center
+       itself.";
+  }
+
+  identity physical-network-function {
+    base event-type-id;
+    description
+      "Indicates that the event is raised by a physical network function.";
+  }
+
+  identity performance-measurement-type-id {
+    description
+      "Base identity for performance measurement types. A unique identification
+       of the performance measurement value, not including the resource.
+       Different resources can share performance measurement types. If the
+       resource reports the same performance measurement type, it is to be
+       considered to be the same performance measurement.
+
+       This identity is abstract and MUST NOT be used for performance
+       measurement.";
+  }
+
+  identity performance-measurement-unit-id {
+    description
+      "Base identity for performance measurement units.
+
+       This identity is abstract and MUST NOT be used for performance
+       measurement.";
+  }
+
+  identity celsius {
+    base performance-measurement-unit-id;
+    description
+      "°C: Grad Celsius";
+  }
+
+  identity dBm {
+    base performance-measurement-unit-id;
+    description
+      "dBm is unit of level used to indicate that a power ratio is expressed in
+       decibels (dB) with reference to one milliwatt (mW).";
+  }
+
+  identity dB {
+    base performance-measurement-unit-id;
+    description
+      "dB: decibels";
+  }
+
+  identity fahrenheit {
+    base performance-measurement-unit-id;
+    description
+      "°F: Grad Fahrenheit";
+  }
+
+  identity mW {
+    base performance-measurement-unit-id;
+    description
+      "mW: milliwatt";
+  }
+
+  identity kHz {
+    base performance-measurement-unit-id;
+    description
+      "kHz: kilohertz";
+  }
+
+  /*
+   * Type definitions
+   */
+
+  typedef domain-id {
+    type identityref {
+      base domain-id;
+    }
+    description
+      "Identifies an event domain. The description of the domain
+       identifier MUST indicate if the domain identifier is abstract or not.
+       An abstract domain identifier is used as a base for other domain ids
+       and will not be used as a value for a domain or be present in
+       the event.";
+  }
+
+  typedef event-type-id {
+    type identityref {
+      base event-type-id;
+    }
+    description
+      "Identifies an event type. The description of the event type
+       MUST indicate if the event type is abstract or not.
+       An abstract event type is used as a base for other event types
+       and will not be used as a value for an event.";
+  }
+
+  typedef pm-value-type {
+    type union {
+      type uint64;
+      type int64;
+      type decimal64 {
+        fraction-digits 2;
+      }
+      type decimal64 {
+        fraction-digits 17;
+      }
+    }
+    description
+      "Inspired and copied from OpenROADM. A generic type definition
+       for performance monitoring values.";
+  }
+
+  typedef performance-measurement-type-id {
+    type identityref {
+      base performance-measurement-type-id;
+    }
+    description
+      "Identifies an performance-measurement type. The description of the
+       performance measurement type id MUST indicate if the performance
+       measurement type is abstract or not. An abstract performance measurement
+       type is used as a base for other performance measurement type ids
+       and will not be used as a value for an performance measurement or be
+       present in the performance measurement inventory.";
+  }
+
+  typedef performance-measurement-unit-id {
+    type identityref {
+      base performance-measurement-unit-id;
+    }
+    description
+      "Identifies an performance-measurement unit. The description of the
+       performance measurement unit id MUST indicate if the performance
+       measurement unit is abstract or not. An abstract performance measurement
+       unit is used as a base for other performance measurement unit ids
+       and will not be used as a value for an performance measurement or be
+       present in the performance measurement inventory.";
+  }
+
+  typedef priority {
+    type enumeration {
+      enum high {
+        description
+          "Indicates the highest priority of an event. This value SHOULD
+           be used only in very rare cases, where it must be ensured,
+           that the event SHOULD be processed immediately by-passing any
+           queue. ";
+      }
+      enum medium {
+        description
+          "This value SHOULD be used to indicate that the event SHOULD
+           be processed faster than default. ";
+      }
+      enum normal {
+        description
+          "The default value of a event priority.";
+      }
+      enum low {
+        description
+          "Indicates that such event can be process, when the processing
+           system is idle.";
+      }
+    }
+    description
+      "A non-extensible enumeration defining the different priority levels.
+       In case of resource constrainer and overload scenarios an event with
+       a higher priority SHOULD be handled first.";
+  }
+
+  typedef resource {
+    type union {
+      type instance-identifier {
+        require-instance false;
+      }
+      type yang:object-identifier;
+      type string;
+      type yang:uuid;
+    }
+    description
+      "This is an identification of the event emitting resource, such as an
+       interface.  It should be as fine-grained as possible both to
+       guide the operator and to guarantee uniqueness of the event emitting
+       resource.
+
+       If the resource is modeled in YANG, this type will
+       be an instance-identifier.
+
+       If the resource is an SNMP object, the type will be an
+       object-identifier.
+
+       If the resource is anything else, for example a distinguished
+       name or a CIM path, this type will be a string.
+
+       If the alarming object is identified by a UUID use the uuid
+       type.  Be cautious when using this type, since a UUID is hard
+       to use for an operator.
+
+       If the server supports several models, the precedence should
+       be in the order as given in the union definition.";
+    reference
+      "RRC 8632: Type Definition 'resource'";
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping schema-grp {
+    leaf namespace {
+      type string {
+        length "1..255";
+      }
+      mandatory true;
+      description
+        "The (YANG-) schema namespace as as unique reference.";
+    }
+    leaf module {
+      type string {
+        length "1..255";
+      }
+      description
+        "The (YANG-) module name.";
+    }
+    leaf revision {
+      type yang:date-and-time;
+      description
+        "The revision date of the (YANG-) schema.";
+    }
+    description
+      "An object class to reference a (YANG-) schema.";
+  }
+}
