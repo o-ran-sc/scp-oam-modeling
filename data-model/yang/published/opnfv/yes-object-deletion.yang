@@ -1,0 +1,109 @@
+module yes-object-deletion {
+    yang-version 1.1;
+    namespace "urn:opnfv:params:xml:ns:yang:object-deletion";
+    prefix yod;
+
+    import yang-based-event-stream {
+        prefix yes;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+    import yes-types {
+        prefix yt;
+        reference
+          "wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    organization
+      "Open Platform for NFV (OPNFV) - Virtual Event Streaming (VES) project";
+    contact
+      "wiki.opnfv.org/display/ves";
+    description
+      "This module contains a collection of YANG definitions for sending an
+       object creation notification.
+
+       Copyright 2020 highstreet technologies GmbH and others.
+
+       Licensed under the Apache License, Version 2.0 (the 'License');
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an 'AS IS' BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.";
+
+    revision 2020-07-04 {
+        description
+          "Initial version";
+        reference
+          "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+           VES: wiki.opnfv.org/display/ves/VES+Home
+                docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+           YES: wiki.opnfv.org/display/ves/VES+goes+YES";
+    }
+
+    /*
+     * Groupings
+     */
+    grouping object-deletion-grp {
+        leaf object-reference {
+            type instance-identifier {
+                require-instance false;
+            }
+            mandatory true;
+            description
+              "A reference to the object containing the attribute (leaf).";
+        }
+        container schema {
+            uses yt:schema-grp;
+            description
+              "The YANG module, which defines the type of the attribute
+               identified by its namespace.";
+        }
+        anydata data {
+            description
+              "A set of data representing the deleted object instance.
+               TODO: does this make any sense?";
+        }
+        description
+          "An object class containing parameters for object deletion.";
+    }
+
+    /*
+     * Augmentation of YES
+     */
+    augment "/yes:event-history/yes:event" {
+        when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'yod:object-deletion')" {
+            description
+              "The event header must indicate 'object-deletion'.";
+        }
+        if-feature yes:event-history;
+        list object-deletion {
+            uses object-deletion-grp;
+            description
+              "A single object for specific parameters, used for the any object
+               deletion (list item or container).";
+        }
+        description
+          "Adds to YES the specifics of object-deletion notifications.";
+    }
+
+    augment "/yes:yang-based-event-stream/yes:event" {
+        when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'yod:object-deletion')" {
+            description
+              "The event header must indicate 'object-deletion'.";
+        }
+        list object-deletion {
+            uses object-deletion-grp;
+            description
+              "A single object for specific parameters, used for the any object
+               deletion (list item or container).";
+        }
+        description
+          "Adds to YES the specifics of object-deletion notifications.";
+    }
+}
