@@ -1,0 +1,192 @@
+module yes-o1-notify-pnf-registration-additional-fields {
+  yang-version 1.1;
+  namespace "urn:o-ran-sc:params:xml:ns:yang:yes-o1-notify-pnf-registration-additional-fields";
+  prefix ypra;
+
+  import yang-based-event-stream {
+    prefix yes;
+    reference
+      "wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+  import yes-o1-notify-pnf-registration {
+    prefix ypr;
+    reference
+      "O-RAN Operations and Maintenance Interface Specification (O-RAN.WG10.O1-Interface.0-v07.00)
+       section 2.7.2.4 Operations and Notifications";
+  }
+
+  organization
+    "O-RAN Software Community";
+  contact
+    "www.o-ran-sc.org";
+  description
+    "This module is inspired by VES 7.1.1 but uses YANG concepts and types to
+     describe the exchanged data format.
+     This module augments yes-o1-notify-pnf-registration for vendor specific
+     additional fields.
+
+     Copyright 2022 highstreet technologies GmbH and others.
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2022-08-24 {
+    description
+      "Initial version";
+    reference
+      "ONAP SDN-R: wiki.onap.org/display/DW/SDN-R
+       VES: wiki.opnfv.org/display/ves/VES+Home
+            docs.onap.org/en/frankfurt/submodules/dcaegen2.git/docs/sections/services/ves-http
+       YES: wiki.opnfv.org/display/ves/VES+goes+YES
+       O-RAN Operations and Maintenance Interface Specification (O-RAN.WG10.O1-Interface.0-v07.00)
+             section 2.7.2.4 Operations and Notifications";
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping o1-notify-pnf-registration-additional-fields-grp {
+    // TODO align with ietf-hardware, ONAP AAI, ONF manufactured-thing
+    leaf transport-protocol {
+      type enumeration {
+        enum ssh {
+          description
+            "NETCONF via SSH";
+        }
+        enum tls {
+          description
+            "NETCONF via TLS";
+          reference
+            "RFC7589: Using the NETCONF Protocol over Transport Layer Security (TLS)
+                      with Mutual X.509 Authentication";
+        }
+      }
+      default "ssh";
+      description
+        "Defines the security protocol for NETCONF";
+    }
+    leaf username {
+      type string {
+        length "3..255";
+      }
+      description
+        "The username for the connection.";
+    }
+    choice transport-protocol-details {
+      case ssh {
+        leaf password {
+          type string {
+            length "8..255";
+          }
+          description
+            "The user's password for the SSH session.";
+        }
+        leaf host-key {
+          type string;
+          description
+            "BASE-64 encoded public key which is used by the network-function
+              during the connection.";
+        }
+      }
+      case tls {
+        leaf key-reference {
+          type string;
+          description
+            "Key identifier inside the NETCONF server's keystore.
+              It is used during two-way TLS authentication.";
+          reference
+            "ietf-keystore.yang";
+        }
+      }
+      description
+        "Provides connectivity details for one of the supported transport protocols";
+    }
+    leaf reconnect-on-changed-schema {
+      type boolean;
+      default "false";
+      description
+        "Defines if the NETCONF client should reconnect to the network
+         function, if new YANG capabilities are exposed.";
+    }
+    leaf connection-timeout {
+      type uint32;
+      units "ms";
+      default "20000";
+      description
+        "Defines the NETCONF client timeout to indicate that the connection
+         was lost.";
+    }
+    leaf max-connection-attempts {
+      type uint32;
+      default "0";
+      description
+        "Defines the number of attempts by the NETCONF client to connect
+         to the NETCONF server, before the automated connection function, by
+         the NETCONF client is switched off. The value 0 means 'infinity'.";
+    }
+    leaf between-attempts-timeout {
+      type uint32;
+      units "ms";
+      default "2000";
+      description
+        "Defines the first delay time in milliseconds to try a new reconnect
+         by the NETCONF client. For the next attempts the values is
+         multiplied with the 'sleep-factor'.";
+    }
+    leaf sleep-factor {
+      type decimal64 {
+        fraction-digits 1;
+        range "1.0 .. 10.0";
+      }
+      default "1.5";
+      description
+        "Defines the factor to increase the reconnect attempt.";
+    }
+    leaf keepalive-delay {
+      type uint32;
+      units "s";
+      default "120";
+      description
+        "Defines the time in seconds between two 'empty' NETCONF request to
+         check if the NETCONF server is functional or can be reached. The
+         value 0 turns of such function.";
+    }
+    description
+      "An object class containing o1-notify-pnf-registration additional fields.";
+  }
+
+  /*
+   * Augmentation of o1-notify-pnf-registration
+   */
+
+  augment "/yes:event-history/yes:event/ypr:o1-notify-pnf-registration" {
+    when "derived-from-or-self(/yes:event-history/yes:event/yes:header/yes:domain, 'ypr:o1-notify-pnf-registration')" {
+      description
+        "The event header must indicate 'o1-notify-pnf-registration'.";
+    }
+    if-feature "yes:event-history";
+    uses o1-notify-pnf-registration-additional-fields-grp;
+    description
+      "Adds additional fields to o1-notify-pnf-registration notifications.";
+  }
+
+  augment "/yes:yang-based-event-stream/yes:event/ypr:o1-notify-pnf-registration" {
+    when "derived-from-or-self(/yes:yang-based-event-stream/yes:event/yes:header/yes:domain, 'ypr:o1-notify-pnf-registration')" {
+      description
+        "The event header must indicate 'o1-notify-pnf-registration'.";
+    }
+    uses o1-notify-pnf-registration-additional-fields-grp;
+    description
+      "Adds additional fields to o1-notify-pnf-registration notifications.";
+  }
+}
