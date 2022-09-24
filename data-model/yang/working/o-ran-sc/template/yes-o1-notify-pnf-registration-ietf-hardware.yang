@@ -1,0 +1,171 @@
+module yes-o1-notify-pnf-registration-ietf-hardware {
+  yang-version 1.1;
+  namespace "urn:o-ran-sc:params:xml:ns:yang:yes-o1-notify-pnf-registration-ietf-hardware";
+  prefix ypri;
+
+  import ietf-interfaces {
+    prefix "if";
+    reference
+      "RFC: 8343: A YANG Data Model for Interface Management";
+  }
+
+  import o-ran-interfaces {
+    prefix "o-ran-int";
+    reference
+      "ORAN-WG4.M.0-v05.00";
+  }
+
+  import o-ran-hardware {
+    prefix "o-ran-hw";
+    reference
+      "ORAN-WG4.M.0-v05.00";
+  }
+
+  import yang-based-event-stream {
+    prefix yes;
+    reference
+      "wiki.opnfv.org/display/ves/VES+goes+YES";
+  }
+  import yes-o1-notify-pnf-registration {
+    prefix ypr;
+  }
+  import ietf-hardware {
+    prefix hw;
+    reference
+      "RFC 8348: A YANG Data Model for Hardware Management";
+  }
+
+  organization
+    "O-RAN Software Community";
+  contact
+    "www.o-ran-sc.org";
+  description
+    "The module extends yes-o1-notify-pnf-registration with hardware information
+     and parameters according to RFC 8348.
+
+     Copyright 2022 highstreet technologies GmbH and others.
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2022-09-12 {
+    description
+      "Initial version";
+    reference
+      "O-RAN Operations and Maintenance Interface Specification (O-RAN.WG10.O1-Interface.0-v07.00)
+             section 2.7.2.4 Operations and Notifications
+       RFC 8348: A YANG Data Model for Hardware Management";
+  }
+
+  /*
+   * Groupings
+   */
+  grouping hardware-grp {
+    leaf serial-number {
+      type leafref {
+        path '/hw:hardware/hw:component/hw:serial-num';
+      }
+      // mandatory true;
+      description
+        "The serial number of the network function.";
+    }
+    // macAddress - O /if:interfaces/if:interface/o-ran-int:mac-address
+    leaf mac-address {
+      type leafref {
+        path '/if:interfaces/if:interface/o-ran-int:mac-address';
+      }
+      description
+        "The MAC address of OAM interface of the network function.";
+    }
+    leaf model-number {
+      type leafref {
+        path '/hw:hardware/hw:component/hw:model-name';
+      }
+      description
+        "Version or name of the network function from the vendor.";
+    }
+    leaf software-version {
+      type leafref {
+        path '/hw:hardware/hw:component/hw:software-rev';
+      }
+      description
+        "The active software version running on the network function.";
+    }
+    leaf manufacture-date {
+      type leafref {
+        path '/hw:hardware/hw:component/hw:mfg-date';
+      }
+      description
+        "Manufacture date of the network function.";
+    }
+    leaf last-service-date {
+      type leafref {
+        path '/hw:hardware/hw:component/o-ran-hw:last-service-date';
+      }
+      description
+        "Date when the field operation staff way on-side.";
+    }
+    description
+      "An object class containing o1-notify-pnf-registration specific parameters
+       according to RFC 8348.";
+  }
+
+  /*
+   * Augmentation of o1-notify-pnf-registration
+   */
+
+  // vendorName M /hw:hardware/hw:component/hw:mfg-name
+  augment "/yes:event-history/yes:event/ypr:o1-notify-pnf-registration/ypr:vendor" {
+    case name {
+      leaf vendor-name {
+        type leafref {
+          path '/hw:hardware/hw:component/hw:mfg-name';
+        }
+        description
+          "Network function vendor name according to IANA Private Enterprise Numbers";
+      }
+    }
+    description
+      "Exposing the vendor-name as defined by IETF.";
+  }
+
+  augment "/yes:yang-based-event-stream/yes:event/ypr:o1-notify-pnf-registration/ypr:vendor" {
+    case name {
+      leaf vendor-name {
+        type leafref {
+          path '/hw:hardware/hw:component/hw:mfg-name';
+        }
+        description
+          "Network function vendor name according to IANA Private Enterprise Numbers";
+      }
+    }
+    description
+      "Exposing the vendor-name as defined by ietf:";
+    reference
+      "3GPP TS 28.632 vendorName";
+  }
+
+  augment "/yes:event-history/yes:event/ypr:o1-notify-pnf-registration" {
+    if-feature "yes:event-history";
+    uses hardware-grp;
+    description
+      "Adds to o1-notify-pnf-registration container within the historic data
+       the hardware information and parameters according to ietf.";
+  }
+
+  augment "/yes:yang-based-event-stream/yes:event/ypr:o1-notify-pnf-registration" {
+    uses hardware-grp;
+    description
+      "Adds to o1-notify-pnf-registration container within the notification
+       syntax the hardware information and parameters according to ietf.";
+  }
+}
