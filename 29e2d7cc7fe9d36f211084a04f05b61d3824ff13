@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d145be4_04d8acb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2022-09-24T15:25:27Z",
+      "side": 1,
+      "message": "validation with yanglint and pyang --lint\n\ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/template (OAM-301)\n└─ $ ▶ yanglint yes-o1-notify-pnf-registration.yang \ndemx8as6 @ martindev ~/workspace/o-ran-sc/modeling/data-model/yang/working/o-ran-sc/template (OAM-301)",
+      "revId": "29e2d7cc7fe9d36f211084a04f05b61d3824ff13",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
