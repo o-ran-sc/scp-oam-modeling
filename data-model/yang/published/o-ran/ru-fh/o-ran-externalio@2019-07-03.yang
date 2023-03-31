@@ -58,6 +58,7 @@ module o-ran-externalio {
   }
 
   grouping external-io-group {
+    description "an external io grouping";
     list input {
       key "name";
       config false;
@@ -140,6 +141,7 @@ module o-ran-externalio {
   }
 
   grouping notification-group {
+    description "a notification grouping";
     container current-input-notification {
       description "a container for the state of the input ports";
       list external-input {

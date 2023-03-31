@@ -1,11 +1,13 @@
-module o-ran-udp-echo {
+module o-ran-certificates {
   yang-version 1.1;
-  namespace "urn:o-ran:udpecho:1.0";
-  prefix "o-ran-echo";
+  namespace "urn:o-ran:certificates:1.0";
+  prefix "o-ran-cert";
 
-  import o-ran-interfaces {
-    prefix "o-ran-int";
-  }
+  import ietf-x509-cert-to-name {
+    prefix x509c2n;
+    reference
+      "RFC 7407: A YANG Data Model for SNMP Configuration";
+     }
 
   organization "O-RAN Alliance";
 
@@ -13,10 +15,9 @@ module o-ran-udp-echo {
     "www.o-ran.org";
 
   description
-    "This module covers off aspects of interface transport
-    verification for UDP/IP based C/U plane connections based on UDP Echo.
+    "This module defines the certificates model for the O-RAN Equipment authorization.
 
-    Copyright 2019 the O-RAN Alliance.
+    Copyright 2022 the O-RAN Alliance.
 
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
     AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -42,55 +43,41 @@ module o-ran-udp-echo {
     contributors may be used to endorse or promote products derived from
     this software without specific prior written permission.";
 
-  revision "2019-02-04" {
+  revision "2022-08-15" {
     description
-      "version 1.0.0
+      "version 10.0.0
 
-      1) imported model from xRAN
-      2) changed namespace and reference from xran to o-ran";
+      1) initial version";
 
-    reference "ORAN-WG4.M.0-v01.00";
+    reference "ORAN-WG4.M.0-v10.00";
   }
 
-// groupings
-
-  grouping udp-echo-group {
-    description "a udp echo grouping";
-    leaf enable-udp-echo {
-      type boolean;
-      default false;
-      description
-        "whether O-RU's UDP ech server is enabled";
-    }
-
-    leaf dscp-config {
-      type enumeration {
-        enum REFLECTIVE {
-          description
-            "DSCP in echoed datagrams is copied from received datagram";
-        }
-        enum EF {
-          description
-            "DSCP in echoed datagrams is always be set to expeditied
-            forwarding Per Hop Behaviour.";
-        }
-      }
-      default EF;
-      description "configuration of UDP echo DSCP";
-    }
-
-    leaf echo-replies-transmitted {
-      type uint32;
-      config false;
-      description
-        "The total number of UDP echo replies transmitted by the O-RU.";
-    }
+  grouping cert-maps {
+    uses x509c2n:cert-to-name;
+    description
+      "The cert-maps container is used by a TLS-
+       based NETCONF server to map the NETCONF
+       client's presented X.509 certificate to
+       a NETCONF username.  If no matching and
+       valid cert-to-name list entry can be found,
+       then the NETCONF server MUST close the
+       connection, and MUST NOT accept NETCONF
+       messages over it.
+       Note - when included, the /cert-to-name/name refers to the schema node
+       users/user/name in o-ran-usermgmt.yang";
+    reference
+      "RFC 7407: NETCONF over TLS, Section 7";
   }
 
-  container udp-echo {
-    if-feature o-ran-int:UDPIP-BASED-CU-PLANE;
-    description "container for udp echo";
+  container certificate-parameters {
+    description
+      "Top Level Container for all certificate related parameters";
 
-    uses udp-echo-group;
+    container cert-maps {
+      description
+        "Container for certificate maps";
+
+      uses cert-maps;
+    }
   }
 }
