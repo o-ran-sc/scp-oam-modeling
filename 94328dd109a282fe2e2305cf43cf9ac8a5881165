@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c4ef582_9aed6874",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000060
+      },
+      "writtenOn": "2023-04-01T12:33:56Z",
+      "side": 1,
+      "message": "demx8as6@martindev ~/workspace/o-ran-sc/modeling/data-model/yang/published/o-ran/ru-fh (WG4-2023-03)$ find -name \u0027o-ran-*.yang\u0027 -type l -exec pyang --lint \"{}\" \\;\n./o-ran-processing-element.yang:473 (at ./o-ran-processing-element.yang:303): warning: default value for a key leaf is ignored\ndemx8as6@martindev ~/workspace/o-ran-sc/modeling/data-model/yang/published/o-ran/ru-fh (WG4-2023-03)$",
+      "revId": "94328dd109a282fe2e2305cf43cf9ac8a5881165",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
